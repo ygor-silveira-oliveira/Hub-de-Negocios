@@ -1,0 +1,94 @@
+<div class="contact section">
+  <div class="container">
+    <div class="contact__wrap">
+      <div class="contact__intro reveal">
+        <span class="section-tag">Seja parceiro</span>
+        <h2 class="section-title">
+          Pronto para construir<br />
+          <span class="text-brand">algo seu?</span>
+        </h2>
+        <p class="section-subtitle">
+          Preencha o formulário e um especialista HUB entrará em contato para
+          apresentar o plano ideal para o seu momento.
+        </p>
+
+        <ul class="contact__benefits">
+          <li>
+            <span class="contact__benefit-check" aria-hidden="true"></span>
+            Sem experiência prévia necessária
+          </li>
+          <li>
+            <span class="contact__benefit-check" aria-hidden="true"></span>
+            Treinamento completo na Universidade HUB
+          </li>
+          <li>
+            <span class="contact__benefit-check" aria-hidden="true"></span>
+            Suporte e mentorias ao longo da jornada
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact__form reveal" data-delay="1" novalidate>
+        <div class="contact__row">
+          <div class="contact__field">
+            <label for="cName">Nome completo</label>
+            <input type="text" id="cName" name="nome" placeholder="Seu nome" autocomplete="name" />
+          </div>
+          <div class="contact__field">
+            <label for="cPhone">Telefone</label>
+            <input type="tel" id="cPhone" name="telefone" placeholder="(00) 00000-0000" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="contact__row">
+          <div class="contact__field">
+            <label for="cCity">Cidade</label>
+            <input type="text" id="cCity" name="cidade" placeholder="Sua cidade" autocomplete="address-level2" />
+          </div>
+          <div class="contact__field contact__field--sm">
+            <label for="cState">Estado</label>
+            <select id="cState" name="estado">
+              <option value="" disabled selected>UF</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+              <option>SP</option><option>SE</option><option>TO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="contact__row">
+          <div class="contact__field">
+            <label for="cJob">Profissão</label>
+            <input type="text" id="cJob" name="profissao" placeholder="Sua profissão atual" />
+          </div>
+          <div class="contact__field">
+            <label for="cPlan">Plano de interesse</label>
+            <select id="cPlan" name="plano">
+              <option value="" disabled selected>Selecione</option>
+              <option>HUB Start</option>
+              <option>HUB Pro</option>
+              <option>HUB Prime</option>
+              <option>Ainda não sei</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="contact__field">
+          <label for="cGoal">Objetivo</label>
+          <textarea id="cGoal" name="objetivo" rows="3" placeholder="Conte o que você busca com o HUB"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg contact__submit">
+          Quero ser parceiro HUB
+        </button>
+        <p class="contact__disclaimer">
+          Seus dados estão seguros. Sem spam — apenas o contato do time HUB.
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

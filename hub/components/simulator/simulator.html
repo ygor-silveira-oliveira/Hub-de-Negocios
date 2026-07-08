@@ -1,0 +1,78 @@
+<div class="simulator section">
+  <div class="container">
+    <div class="simulator__wrap">
+      <div class="simulator__intro reveal">
+        <span class="section-tag">Simulador</span>
+        <h2 class="section-title">Visualize seu potencial</h2>
+        <p class="section-subtitle">
+          Uma prévia do que você pode construir. Selecione um perfil e veja a
+          projeção de receita imediata, recorrente e patrimônio.
+        </p>
+
+        <div class="simulator__selector" role="tablist" aria-label="Perfil de simulação">
+          <button class="simulator__pill is-active" data-plan="start" role="tab" aria-selected="true">Start</button>
+          <button class="simulator__pill" data-plan="pro" role="tab" aria-selected="false">Pro</button>
+          <button class="simulator__pill" data-plan="prime" role="tab" aria-selected="false">Prime</button>
+        </div>
+
+        <div class="simulator__slider">
+          <div class="simulator__slider-head">
+            <label for="simClients">Clientes ativos na sua carteira</label>
+            <span class="simulator__slider-value" id="simClientsValue">12</span>
+          </div>
+          <input
+            type="range"
+            id="simClients"
+            class="simulator__range"
+            min="1"
+            max="200"
+            step="1"
+            value="12"
+            aria-label="Número de clientes ativos"
+          />
+          <div class="simulator__slider-scale">
+            <span>1</span>
+            <span>200</span>
+          </div>
+        </div>
+
+        <p class="simulator__note">
+          * Simulação ilustrativa com base no ticket médio de cada plano.
+          Resultados variam conforme dedicação e carteira construída.
+        </p>
+      </div>
+
+      <div class="simulator__card reveal" data-delay="2">
+        <div class="simulator__card-glow" aria-hidden="true"></div>
+
+        <div class="simulator__card-head">
+          <span class="simulator__card-label">Projeção — Plano <strong id="simPlanName">Start</strong></span>
+          <span class="simulator__badge" id="simPayback">Payback 3–4 meses</span>
+        </div>
+
+        <div class="simulator__metric simulator__metric--main">
+          <span class="simulator__metric-label">Receita mensal estimada</span>
+          <span class="simulator__metric-value" id="simMonthly">R$ 288</span>
+        </div>
+
+        <div class="simulator__metric-grid">
+          <div class="simulator__metric">
+            <span class="simulator__metric-label">Receita anual</span>
+            <span class="simulator__metric-value simulator__metric-value--sm" id="simYearly">R$ 3.456</span>
+          </div>
+          <div class="simulator__metric">
+            <span class="simulator__metric-label">Recorrência (após 12m)</span>
+            <span class="simulator__metric-value simulator__metric-value--sm" id="simRecurring">—</span>
+          </div>
+        </div>
+
+        <div class="simulator__bar" aria-hidden="true">
+          <div class="simulator__bar-fill" id="simBar" style="width: 30%"></div>
+        </div>
+        <span class="simulator__bar-caption">Potencial de construção de patrimônio</span>
+
+        <a href="#contato" class="btn btn-primary simulator__cta">Quero esse resultado</a>
+      </div>
+    </div>
+  </div>
+</div>

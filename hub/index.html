@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="bg-primary">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d0d0f" />
+    <title>HUB de Negócios — Múltiplos serviços. Uma única plataforma.</title>
+    <meta
+      name="description"
+      content="Construa seu próprio negócio digital e gere renda recorrente. Venda seguros, crédito e soluções de economia através de uma única plataforma tecnológica."
+    />
+
+    <!-- Estilos globais -->
+    <link rel="stylesheet" href="css/global.css" />
+
+    <!-- Estilos de cada componente -->
+    <link rel="stylesheet" href="components/navbar/navbar.css" />
+    <link rel="stylesheet" href="components/hero/hero.css" />
+    <link rel="stylesheet" href="components/about/about.css" />
+    <link rel="stylesheet" href="components/services/services.css" />
+    <link rel="stylesheet" href="components/how-it-works/how-it-works.css" />
+    <link rel="stylesheet" href="components/simulator/simulator.css" />
+    <link rel="stylesheet" href="components/plans/plans.css" />
+    <link rel="stylesheet" href="components/comparison/comparison.css" />
+    <link rel="stylesheet" href="components/contact/contact.css" />
+    <link rel="stylesheet" href="components/footer/footer.css" />
+  </head>
+
+  <body>
+    <!-- Containers onde cada componente é injetado via fetch() -->
+    <header data-component="navbar"></header>
+
+    <main>
+      <section id="inicio" data-component="hero"></section>
+      <section id="sobre" data-component="about"></section>
+      <section id="servicos" data-component="services"></section>
+      <section id="como-funciona" data-component="how-it-works"></section>
+      <section id="simulador" data-component="simulator"></section>
+      <section id="planos" data-component="plans"></section>
+      <section id="comparativo" data-component="comparison"></section>
+      <section id="contato" data-component="contact"></section>
+    </main>
+
+    <footer data-component="footer"></footer>
+
+    <!-- Orquestrador principal -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

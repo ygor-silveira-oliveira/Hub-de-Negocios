@@ -1,0 +1,161 @@
+/* ============================ SERVICES ============================ */
+.services {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.services__head {
+  max-width: 680px;
+  margin-bottom: 64px;
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.services__card {
+  position: relative;
+  padding: 34px 30px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.35s ease, border-color 0.35s ease;
+}
+
+.services__card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+/* Primeiro card ocupa duas colunas na primeira linha */
+.services__card--lg {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.services__card--brand {
+  background: linear-gradient(
+    145deg,
+    rgba(34, 197, 94, 0.12),
+    rgba(34, 197, 94, 0.02)
+  );
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.services__icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  margin-bottom: 22px;
+}
+
+.services__icon--brand {
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--brand);
+}
+
+.services__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.services__card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.services__card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+.services__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.services__tags li {
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.services__card--brand .services__tags li {
+  color: var(--brand);
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+/* Em breve */
+.services__soon {
+  margin-top: 44px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 26px 30px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border-strong);
+}
+
+.services__soon-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.services__soon-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.services__soon-list span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 860px) {
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .services__card--lg {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+  .services__card--lg {
+    grid-column: span 1;
+  }
+}
