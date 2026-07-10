@@ -8,10 +8,10 @@
   overflow: hidden;
   padding-block: calc(var(--nav-height) + 40px) 80px;
   background: radial-gradient(
-      120% 90% at 50% 0%,
-      #17171b 0%,
-      var(--bg-primary) 55%
-    );
+    120% 90% at 50% 0%,
+    #17171b 0%,
+    var(--bg-primary) 55%
+  );
 }
 
 .hero__particles {
@@ -46,11 +46,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    ),
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(120% 80% at 50% 20%, #000 0%, transparent 75%);
@@ -60,7 +57,7 @@
     transparent 75%
   );
 }
-
+/*ELIMINAR*/
 .hero__inner {
   position: relative;
   z-index: 2;
@@ -68,31 +65,10 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  transform: translateY(-50px);
 }
 
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 18px;
-  border-radius: 100px;
-  background: rgba(34, 197, 94, 0.08);
-  border: 1px solid rgba(34, 197, 94, 0.24);
-  color: var(--text);
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  margin-bottom: 34px;
-}
-
-.hero__badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--brand);
-  box-shadow: 0 0 0 0 var(--brand-glow);
-  animation: heroPulse 2.4s infinite;
-}
+/*ELIMINAR*/
 
 @keyframes heroPulse {
   0% {
@@ -107,7 +83,7 @@
 }
 
 .hero__title {
-  font-size: clamp(2.5rem, 6.5vw, 5rem);
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -116,9 +92,9 @@
 }
 
 .hero__subtitle {
-  margin-top: 28px;
+  margin-top: 8px;
   color: var(--text-muted);
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-size: 0.7rem;
   font-weight: 400;
   max-width: 620px;
   line-height: 1.55;
@@ -126,11 +102,18 @@
 }
 
 .hero__actions {
-  margin-top: 44px;
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   justify-content: center;
+  font-size: 0.7rem;
+}
+
+.hero__actions .btn {
+  padding: 8px 24px;
+  font-size: 0.4rem;
+  font-weight: 600;
 }
 
 .hero__stats {
