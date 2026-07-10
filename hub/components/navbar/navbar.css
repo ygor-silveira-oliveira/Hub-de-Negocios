@@ -86,7 +86,7 @@
 
 .navbar__cta {
   padding: clamp(6px, 1vw, 9px) clamp(12px, 2vw, 18px);
-  font-size: 0.6rem;
+  font-size: 0.4rem;
   height: 17px;
   font-weight: 600;
   letter-spacing: 0.03em;
