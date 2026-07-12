@@ -1,6 +1,8 @@
 /* ============================ ABOUT ============================ */
 .about {
   background: var(--bg-primary);
+  padding-top: 50px;
+  height: 510px;
 }
 
 .about__head {
@@ -9,17 +11,27 @@
 
 .about__values {
   margin-top: 72px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .about__value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   padding: 32px 28px;
   border-radius: var(--radius);
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  transition: transform 0.35s ease, border-color 0.35s ease,
+  height: 180px;
+  width: 150px;
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
     background 0.35s ease;
 }
 
@@ -30,9 +42,9 @@
 }
 
 .about__value-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +59,7 @@
 }
 
 .about__value h3 {
-  font-size: 1.15rem;
+  font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 10px;
   letter-spacing: -0.01em;
@@ -55,7 +67,7 @@
 
 .about__value p {
   color: var(--text-muted);
-  font-size: 0.92rem;
+  font-size: 0.5rem;
   line-height: 1.55;
 }
 

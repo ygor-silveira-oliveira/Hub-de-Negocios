@@ -2,9 +2,10 @@
 .hero {
   position: relative;
   min-height: 100vh;
+  height: 460px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   overflow: hidden;
   padding-block: calc(var(--nav-height) + 40px) 80px;
   background: radial-gradient(
@@ -89,6 +90,7 @@
   letter-spacing: -0.03em;
   max-width: 15ch;
   text-wrap: balance;
+  margin-top: 50px;
 }
 
 .hero__subtitle {
