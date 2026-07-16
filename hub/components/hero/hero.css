@@ -2,7 +2,7 @@
 .hero {
   position: relative;
   min-height: 100vh;
-  height: 460px;
+  height: 900px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -58,7 +58,7 @@
     transparent 75%
   );
 }
-/*ELIMINAR*/
+
 .hero__inner {
   position: relative;
   z-index: 2;
@@ -68,8 +68,6 @@
   text-align: center;
   transform: translateY(-50px);
 }
-
-/*ELIMINAR*/
 
 @keyframes heroPulse {
   0% {
@@ -84,7 +82,7 @@
 }
 
 .hero__title {
-  font-size: 2rem;
+  font-size: 5rem;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -96,7 +94,7 @@
 .hero__subtitle {
   margin-top: 8px;
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: 1.2rem;
   font-weight: 400;
   max-width: 620px;
   line-height: 1.55;
@@ -114,7 +112,7 @@
 
 .hero__actions .btn {
   padding: 8px 24px;
-  font-size: 0.4rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -135,13 +133,13 @@
 }
 
 .hero__stat strong {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .hero__stat span {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   color: var(--text-muted);
 }
 
