@@ -11,7 +11,7 @@
 .about__values {
   margin-top: 72px;
   display: flex;
-  flex-wrap: wrap;
+
   align-items: stretch;
   justify-content: center;
   gap: 20px;

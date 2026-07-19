@@ -67,6 +67,7 @@
   align-items: center;
   text-align: center;
   transform: translateY(-50px);
+  gap: 20px;
 }
 
 @keyframes heroPulse {

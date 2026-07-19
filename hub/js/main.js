@@ -102,6 +102,12 @@ function initSmoothNav() {
 
       // “Primeira div”/topo real: tenta posicionar no container interno
       // que costuma conter o título (ex.: .container), senão usa o primeiro filho.
+      // Para a home (id="inicio"), queremos voltar ao começo do site.
+      if (id === "#inicio") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
       const first =
         target.querySelector(".container") ||
         target.querySelector(".section-tag, .section-title") ||
