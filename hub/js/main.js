@@ -72,7 +72,7 @@ function initReveal() {
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
   );
 
   els.forEach((el) => observer.observe(el));
@@ -82,16 +82,36 @@ function initReveal() {
  * Ativa navegação suave e destaque do link ativo na navbar.
  */
 function initSmoothNav() {
+  const navbar = document.getElementById("navbar");
+
+  // Altura real da navbar (fixa). Fallback caso ainda não exista.
+  const getNavbarHeight = () => {
+    if (navbar && navbar.offsetHeight) return navbar.offsetHeight;
+    return 80; // fallback compatível com o CSS (~80px)
+  };
+
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const id = link.getAttribute("href");
-      if (id.length > 1) {
-        const target = document.querySelector(id);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
+      if (!id || id.length <= 1) return;
+
+      const target = document.querySelector(id);
+      if (!target) return;
+
+      e.preventDefault();
+
+      // “Primeira div”/topo real: tenta posicionar no container interno
+      // que costuma conter o título (ex.: .container), senão usa o primeiro filho.
+      const first =
+        target.querySelector(".container") ||
+        target.querySelector(".section-tag, .section-title") ||
+        target.firstElementChild ||
+        target;
+
+      const rect = first.getBoundingClientRect();
+      const y = rect.top + window.scrollY - getNavbarHeight();
+
+      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
     });
   });
 }
