@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 125px;
+  height: 80px;
   max-width: 100vw;
   display: flex;
   align-items: center;
@@ -21,33 +21,28 @@
     border-color 0.35s ease,
     backdrop-filter 0.35s ease;
 }
-
 .navbar.is-scrolled {
   background: rgba(13, 13, 15, 0.72);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom-color: var(--border);
 }
-
 .navbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: clamp(8px, 1.5vw, 16px);
 }
-
 .navbar__brand {
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
-
 .navbar__logo {
-  height: 50px;
+  height: 45px;
   width: auto;
   object-fit: contain;
 }
-
 /* Menu — sempre visível, sem hambúrguer, texto enxuto em caixa alta */
 .navbar__menu {
   display: flex;
@@ -57,7 +52,6 @@
   white-space: nowrap;
   min-width: 0;
 }
-
 .navbar__menu a {
   display: inline-block;
   padding: clamp(4px, 0.7vw, 7px) clamp(6px, 1.1vw, 11px);
@@ -72,18 +66,15 @@
     color 0.2s ease,
     background 0.2s ease;
 }
-
 .navbar__menu a:hover {
   color: var(--text);
 }
-
 .navbar__actions {
   display: flex;
   align-items: center;
   gap: clamp(8px, 1.5vw, 16px);
   flex-shrink: 0;
 }
-
 .navbar__cta {
   padding: clamp(6px, 1vw, 9px) clamp(12px, 2vw, 18px);
   font-size: 0.8rem;
@@ -94,7 +85,6 @@
   border-radius: 100px;
   white-space: nowrap;
 }
-
 /* --------- Fallback só para celulares bem estreitos ---------
    Se ainda assim não couber tudo numa linha, o menu ganha rolagem
    horizontal (sem barra visível) em vez de espremer a fonte a
@@ -106,16 +96,13 @@
     padding-bottom: 2px;
     -webkit-overflow-scrolling: touch;
   }
-
   .navbar__menu::-webkit-scrollbar {
     display: none;
   }
-
   .navbar__menu a {
     font-size: 0.6rem;
     padding: 6px 9px;
   }
-
   .navbar__cta {
     font-size: 0.6rem;
     padding: 6px 12px;
