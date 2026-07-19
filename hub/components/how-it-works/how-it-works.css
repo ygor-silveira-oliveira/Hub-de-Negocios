@@ -1,6 +1,8 @@
 /* ============================ HOW IT WORKS ============================ */
 .how {
   background: var(--bg-primary);
+  margin-top: 55px;
+  margin-bottom: 55px;
 }
 
 .how__head {
@@ -55,8 +57,11 @@
   font-weight: 700;
   font-size: 1.05rem;
   color: var(--text-muted);
-  transition: border-color 0.35s ease, color 0.35s ease,
-    box-shadow 0.35s ease, background 0.35s ease;
+  transition:
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
 }
 
 .how__step:hover .how__step-marker {

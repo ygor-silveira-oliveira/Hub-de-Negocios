@@ -1,10 +1,9 @@
 /* ============================ FOOTER ============================ */
 .footer {
-  position: relative;
   background: var(--bg-secondary);
-  border-top: 1px solid var(--border);
-  overflow: hidden;
-  padding-top: clamp(64px, 8vw, 96px);
+  border-top: 1px solid var(--brand);
+  box-shadow: 5px 10px 35px rgba(11, 160, 55, 0.555);
+  height: 300px;
 }
 
 .footer__glow {
@@ -70,7 +69,10 @@
   border-radius: 50%;
   border: 1px solid var(--border-strong);
   color: var(--text-muted);
-  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .footer__social-link svg {
@@ -172,7 +174,12 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease, color 0.25s ease, visibility 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    visibility 0.25s ease;
 }
 
 .footer__to-top.is-visible {

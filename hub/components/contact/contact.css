@@ -1,6 +1,8 @@
 /* ============================ CONTACT ============================ */
 .contact {
   background: var(--bg-primary);
+  height: 700px;
+  padding-top: 50px;
 }
 
 .contact__wrap {
@@ -8,12 +10,6 @@
   grid-template-columns: 0.9fr 1.1fr;
   gap: 64px;
   align-items: start;
-}
-
-.contact__intro {
-  position: sticky;
-  top: calc(var(--nav-height) + 40px);
-  max-width: 440px;
 }
 
 .contact__benefits {
@@ -86,7 +82,9 @@
   color: var(--text);
   font-family: inherit;
   font-size: 0.95rem;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .contact__field textarea {
