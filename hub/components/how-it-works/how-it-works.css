@@ -67,7 +67,6 @@
 .how__step:hover .how__step-marker {
   border-color: var(--brand);
   color: var(--brand);
-  background: rgba(34, 197, 94, 0.08);
 }
 
 .how__step--final .how__step-marker {
