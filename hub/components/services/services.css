@@ -102,6 +102,14 @@
   margin-top: 22px;
 }
 
+.services__tags li:hover {
+  background: var(--brand);
+  color: var(--surface);
+  transition:
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
 .services__tags li {
   font-size: 0.78rem;
   font-weight: 500;
