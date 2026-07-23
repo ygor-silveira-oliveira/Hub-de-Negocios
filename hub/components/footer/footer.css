@@ -110,7 +110,7 @@
 
 .footer__col-title {
   font-size: 0.93rem;
-  font-weight: 600;
+  font-weight: bolder;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-dim);
@@ -163,20 +163,17 @@
   font-size: 1rem;
 }
 
-.footer__legal a {
+.footer__legal span {
   color: var(--text-dim);
   transition: color 0.2s ease;
 }
-
-.footer__legal a:hover {
-  color: var(--text);
+.footer__legal span a {
+  color: var(--brand);
+  transition: color 0.2s ease;
 }
 
-.footer__dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--text-dim);
+.footer__legal span a:hover {
+  color: var(--text);
 }
 
 /* -------- Botão voltar ao topo -------- */

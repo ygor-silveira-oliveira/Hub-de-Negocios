@@ -1,8 +1,8 @@
 /* ============================ CONTACT ============================ */
 .contact {
   background: var(--bg-primary);
-  height: 700px;
   padding-top: 50px;
+  height: 820px;
 }
 
 .contact__wrap {
@@ -115,6 +115,18 @@
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
 }
 
+/* Estado de erro — campo obrigatório não preenchido no envio */
+.contact__field.has-error input,
+.contact__field.has-error select,
+.contact__field.has-error textarea {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.contact__field.has-error label {
+  color: #ef4444;
+}
+
 .contact__submit {
   width: 100%;
   margin-top: 4px;
@@ -124,6 +136,13 @@
   text-align: center;
   font-size: 0.78rem;
   color: var(--text-dim);
+}
+
+.contact__feedback {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ef4444;
+  margin-top: -8px;
 }
 
 @media (max-width: 900px) {
