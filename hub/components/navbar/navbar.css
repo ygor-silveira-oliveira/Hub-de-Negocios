@@ -39,7 +39,7 @@
   flex-shrink: 0;
 }
 .navbar__logo {
-  height: 80px;
+  height: 70px;
   width: auto;
   object-fit: contain;
 }
