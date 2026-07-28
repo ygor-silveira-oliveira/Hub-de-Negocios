@@ -17,15 +17,14 @@ export function init() {
   if (!sections.length || !navLinks.length) return;
 
   const spy = () => {
-    const scrollY = window.scrollY;
     const navbarH = navbar.offsetHeight || 80;
     let current = "";
 
     sections.forEach((section) => {
-      const sectionTop = section.offsetTop - navbarH - 10;
-      const sectionBottom = sectionTop + section.offsetHeight;
-
-      if (scrollY >= sectionTop && scrollY < sectionBottom) {
+      const rect = section.getBoundingClientRect();
+      // Seção "ativa" quando seu topo está próximo do topo da tela
+      // (descontando a altura da navbar) e seu fundo ainda está visível
+      if (rect.top <= navbarH + 60 && rect.bottom > navbarH + 60) {
         current = section.getAttribute("id");
       }
     });
@@ -38,6 +37,7 @@ export function init() {
     });
   };
 
-  spy();
+  requestAnimationFrame(spy);
   window.addEventListener("scroll", spy, { passive: true });
+  window.addEventListener("resize", spy, { passive: true });
 }

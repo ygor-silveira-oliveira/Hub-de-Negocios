@@ -71,7 +71,6 @@
 }
 .navbar__menu a.is-active {
   color: var(--brand);
-  background: rgba(255, 255, 255, 0.05);
 }
 .navbar__actions {
   display: flex;
