@@ -1,14 +1,14 @@
 /* ============================ COMPARISON ============================ */
 .comparison {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 40px;
+  padding: clamp(28px, 4vw, 40px);
 }
 
 .comparison__head {
   max-width: 620px;
-  margin-bottom: 56px;
+  margin-bottom: clamp(32px, 5vw, 56px);
 }
 
 .comparison__table-wrap {
@@ -21,12 +21,12 @@
 .comparison__table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 640px;
+  min-width: min(640px, 100%);
 }
 
 .comparison__table th,
 .comparison__table td {
-  padding: 20px 24px;
+  padding: clamp(14px, 2vw, 20px) clamp(14px, 2.5vw, 24px);
   text-align: center;
   border-bottom: 1px solid var(--border);
 }
@@ -111,13 +111,36 @@ td[data-no]::after {
 }
 
 .comparison__cta {
-  margin-top: 44px;
+  margin-top: clamp(28px, 4vw, 44px);
   text-align: center;
 }
 
 @media (max-width: 560px) {
   .comparison__table th,
   .comparison__table td {
-    padding: 16px 14px;
+    padding: 12px 10px;
+  }
+  .comparison__table thead th {
+    font-size: 0.85rem;
+    padding-block: 18px;
+  }
+  .comparison__table tbody th {
+    font-size: 0.82rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .comparison {
+    padding: 52px;
+  }
+  .comparison__table th,
+  .comparison__table td {
+    padding: 24px 32px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .comparison__table {
+    min-width: 800px;
   }
 }

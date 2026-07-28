@@ -5,7 +5,7 @@
    ================================================================ */
 
 // Número que recebe os contatos vindos do site (formato: DDI + DDD + número).
-const whatsappNumber = "5551992664141";
+const whatsappNumber = "5551996505850";
 
 export function init() {
   const form = document.querySelector(".contact__form");

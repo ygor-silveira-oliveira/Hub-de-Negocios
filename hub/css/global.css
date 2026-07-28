@@ -91,7 +91,7 @@ ul {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: 24px;
+  padding-inline: clamp(16px, 2.5vw, 24px);
 }
 
 .section {
@@ -118,7 +118,7 @@ ul {
 }
 
 .section-title {
-  font-size: 3.8rem;
+  font-size: clamp(1.8rem, 4.5vw, 3.8rem);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -127,9 +127,9 @@ ul {
 
 .section-subtitle {
   color: var(--text-muted);
-  font-size: 1rem;
-  max-width: 560px;
-  margin-top: 20px;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  max-width: min(560px, 90%);
+  margin-top: clamp(14px, 2.5vw, 20px);
   text-wrap: pretty;
 }
 
@@ -186,8 +186,8 @@ ul {
 }
 
 .btn-lg {
-  padding: 18px 40px;
-  font-size: 1.05rem;
+  padding: clamp(14px, 2vw, 18px) clamp(28px, 4vw, 40px);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
 }
 
 /* -------- Reveal on scroll -------- */
@@ -252,4 +252,51 @@ ul {
 /* -------- Component loading placeholder -------- */
 [data-component] {
   min-height: 0;
+}
+
+/* -------- Responsivo Global -------- */
+@media (max-width: 768px) {
+  .btn {
+    padding: 13px 24px;
+    font-size: 0.85rem;
+  }
+  .btn-lg {
+    padding: 15px 32px;
+    font-size: 0.95rem;
+  }
+  .section-tag {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-inline: 14px;
+  }
+  .btn {
+    padding: 11px 20px;
+    font-size: 0.8rem;
+  }
+  .btn-lg {
+    padding: 13px 26px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --container: 1280px;
+  }
+  .container {
+    padding-inline: 32px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --container: 1400px;
+  }
+  .container {
+    padding-inline: 40px;
+  }
 }
