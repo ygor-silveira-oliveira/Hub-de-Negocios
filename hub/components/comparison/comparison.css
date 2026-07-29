@@ -4,6 +4,41 @@
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: clamp(28px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+
+.comparison__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.comparison__glow {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(620px, 90vw);
+  height: min(620px, 90vw);
+  max-width: 90vw;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.16) 0%,
+    rgba(34, 197, 94, 0.05) 40%,
+    transparent 70%
+  );
+  filter: blur(clamp(10px, 2vw, 20px));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.comparison .container {
+  position: relative;
+  z-index: 2;
 }
 
 .comparison__head {

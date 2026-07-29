@@ -65,8 +65,8 @@ export function init() {
       plan.recurringLabel === "—"
         ? "—"
         : plan.recurringLabel === "Parcial"
-        ? "Parcial"
-        : formatBRL(plan.recurringRate * clients) + " / mês";
+          ? "Parcial"
+          : formatBRL(plan.recurringRate * clients) + " / mês";
 
     el.name.textContent = plan.name;
     el.monthly.textContent = formatBRL(monthly);
