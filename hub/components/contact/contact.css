@@ -1,11 +1,24 @@
 /* ============================ CONTACT ============================ */
 .contact {
+  position: relative;
   background: var(--bg-primary);
   padding-top: 50px;
   height: 820px;
+  overflow: hidden;
+}
+
+.contact__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .contact__wrap {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: clamp(36px, 5vw, 64px);
