@@ -103,6 +103,9 @@
   border-color: var(--brand);
   color: var(--brand);
 }
+#howStepFinal:hover {
+  color: var(--bg-primary);
+}
 
 .how__step--final .how__step-marker {
   background: var(--brand);
