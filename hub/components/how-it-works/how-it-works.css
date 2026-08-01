@@ -77,6 +77,20 @@
   padding: clamp(16px, 2vw, 22px) 0;
 }
 
+.how__step-link {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 3vw, 28px);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.how__step-link:hover {
+  opacity: 0.85;
+}
+
 .how__step-marker {
   position: relative;
   z-index: 1;
@@ -102,9 +116,6 @@
 .how__step:hover .how__step-marker {
   border-color: var(--brand);
   color: var(--brand);
-}
-#howStepFinal:hover {
-  color: var(--bg-primary);
 }
 
 .how__step--final .how__step-marker {
