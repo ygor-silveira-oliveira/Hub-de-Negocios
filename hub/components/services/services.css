@@ -121,6 +121,12 @@
   background: rgba(34, 197, 94, 0.08);
 }
 
+.services__card--brand a {
+  height: 40px;
+  width: 100%;
+  margin-top: 20px;
+}
+
 @media (max-width: 640px) {
   .services__flex {
     grid-template-columns: 1fr;
