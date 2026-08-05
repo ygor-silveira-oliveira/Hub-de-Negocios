@@ -2,7 +2,7 @@
 .hero {
   position: relative;
   min-height: 100vh;
-  height: 900px;
+  min-height: 100svh; /* usa altura visível real em navegadores mobile modernos */
   display: flex;
   align-items: center;
   justify-content: space-around;

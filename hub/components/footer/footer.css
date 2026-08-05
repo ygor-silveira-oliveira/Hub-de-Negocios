@@ -46,7 +46,7 @@
 }
 
 .footer__logo {
-  height: 150px;
+  height: clamp(90px, 14vw, 150px);
   width: auto;
 }
 

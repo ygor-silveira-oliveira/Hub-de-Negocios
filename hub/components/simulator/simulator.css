@@ -3,8 +3,7 @@
   background: var(--bg-secondary);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  height: 660px;
-  padding-top: 45px;
+  padding-block: 45px clamp(40px, 6vw, 60px);
 }
 
 .simulator__wrap {

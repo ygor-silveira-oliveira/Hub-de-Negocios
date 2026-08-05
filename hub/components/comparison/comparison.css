@@ -56,7 +56,7 @@
 .comparison__table {
   width: 100%;
   border-collapse: collapse;
-  min-width: min(640px, 100%);
+  min-width: 620px;
 }
 
 .comparison__table th,

@@ -10,6 +10,43 @@ export function init() {
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
+  // ----- Menu mobile (hambúrguer) -----
+  const toggle = document.getElementById("navbarToggle");
+  const menu = document.getElementById("navbarMenu");
+
+  if (toggle && menu) {
+    const closeMenu = () => {
+      menu.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Abrir menu");
+      document.body.classList.remove("nav-open");
+    };
+
+    const openMenu = () => {
+      menu.classList.add("is-open");
+      toggle.classList.add("is-open");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "Fechar menu");
+      document.body.classList.add("nav-open");
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = menu.classList.contains("is-open");
+      isOpen ? closeMenu() : openMenu();
+    });
+
+    // Fecha o menu ao clicar em um link.
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Fecha o menu ao redimensionar para desktop.
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) closeMenu();
+    });
+  }
+
   // ----- Scroll Spy: destaca o link da seção visível -----
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".navbar__menu a");
