@@ -3,7 +3,7 @@
   background: var(--bg-primary);
   position: relative;
   overflow: hidden;
-  padding-bottom: 30px;
+  padding-bottom: clamp(60px, 8vw, 30px);
 }
 
 .about__particles {
@@ -50,6 +50,12 @@
   align-items: stretch;
   justify-content: center;
   gap: clamp(16px, 2vw, 20px);
+}
+
+.about__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(30px, 4vw, 44px);
 }
 
 .about__value {
@@ -103,13 +109,6 @@
   color: var(--text-muted);
   font-size: clamp(0.85rem, 1vw, 0.95rem);
   line-height: 1.55;
-}
-
-.about__value-btn {
-  margin-top: auto;
-  padding: 10px 24px;
-  font-size: 0.85rem;
-  font-weight: 600;
 }
 
 @media (max-width: 560px) {
