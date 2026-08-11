@@ -12,6 +12,7 @@
 
     <!-- Estilos globais -->
     <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/preloader.css" />
 
     <!-- Estilos de cada componente -->
     <link rel="stylesheet" href="components/navbar/navbar.css" />
@@ -29,6 +30,27 @@
   </head>
 
   <body>
+    <!-- Tela de carregamento -->
+    <div
+      id="preloader"
+      class="preloader"
+      aria-live="polite"
+      aria-label="Carregando o site"
+    >
+      <img
+        src="assets/images/H_transparente.png"
+        alt=""
+        class="preloader__icon"
+        aria-hidden="true"
+      />
+      <p class="preloader__text">
+        Carregando<span class="preloader__dots"
+          ><span>.</span><span>.</span><span>.</span></span
+        >
+      </p>
+      <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
+    </div>
+
     <!-- Containers onde cada componente é injetado via fetch() -->
     <header data-component="navbar"></header>
 
@@ -46,6 +68,7 @@
     <footer data-component="footer"></footer>
 
     <!-- Orquestrador principal -->
+    <script src="js/preloader.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>
