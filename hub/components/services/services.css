@@ -134,6 +134,135 @@
   margin-top: 20px;
 }
 
+/* ---------- HUB+ expansion animation (replaces the 4 tag buttons) ---------- */
+.services__expansion {
+  margin-top: 22px;
+  padding: 16px 18px 18px;
+}
+
+.services__expansion-eyebrow {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand);
+  text-align: center;
+}
+
+.services__expansion-caption {
+  margin: 8px 0 10px 30px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.services__expansion-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 18px;
+}
+
+.services__expansion-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+  background: rgba(34, 197, 94, 0.18);
+}
+
+.services__expansion-track::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -30%;
+  width: 36%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--brand) 50%,
+    transparent
+  );
+  animation: expansionFlow 5s ease-in-out infinite;
+}
+
+.services__expansion-dot {
+  position: relative;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand-dim);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08);
+  animation: expansionPulse 5s ease-in-out infinite;
+}
+
+.services__expansion-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.services__expansion-dot:nth-child(2) {
+  animation-delay: 0.75s;
+}
+.services__expansion-dot:nth-child(3) {
+  animation-delay: 1.5s;
+}
+.services__expansion-dot:nth-child(4) {
+  animation-delay: 2.25s;
+}
+.services__expansion-dot:nth-child(5) {
+  animation-delay: 3s;
+}
+
+@keyframes expansionFlow {
+  0% {
+    left: -30%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes expansionPulse {
+  0%,
+  90%,
+  100% {
+    background: var(--brand-dim);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08);
+  }
+  5% {
+    background: var(--brand);
+    box-shadow:
+      0 0 0 5px rgba(34, 197, 94, 0.22),
+      0 0 8px 1px var(--brand-glow);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services__expansion-track::after {
+    animation: none;
+    left: 32%;
+    opacity: 0.6;
+  }
+  .services__expansion-dot {
+    animation: none;
+  }
+}
+
 @media (max-width: 640px) {
   .services__flex {
     grid-template-columns: 1fr;
