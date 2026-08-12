@@ -101,6 +101,7 @@
   flex-direction: column;
   gap: 12px;
   margin-bottom: 28px;
+  flex-grow: 1;
 }
 
 .plans__features li {
@@ -127,6 +128,7 @@
 .plans__cta {
   width: 100%;
   position: unset;
+  margin-top: auto;
 }
 
 @media (max-width: 1024px) {
