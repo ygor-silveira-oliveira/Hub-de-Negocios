@@ -158,6 +158,10 @@
   margin-top: -8px;
 }
 
+.contact__feedback--sucesso {
+  color: var(--brand);
+}
+
 @media (max-width: 900px) {
   .contact__wrap {
     grid-template-columns: 1fr;

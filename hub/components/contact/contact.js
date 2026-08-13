@@ -1,11 +1,30 @@
 /* ============================ CONTACT ============================
-   Envio 100% client-side: captura os dados do formulário, monta uma
-   mensagem formatada e abre o WhatsApp com o texto pronto (wa.me).
-   Sem backend, sem banco de dados, sem bibliotecas externas.
+   Envio via EmailJS (dados completos por e-mail) + WhatsApp (mensagem
+   fixa, sem dados pessoais, aberto somente após o e-mail ser enviado
+   com sucesso). Sem backend, sem banco de dados.
    ================================================================ */
 
-// Número que recebe os contatos vindos do site (formato: DDI + DDD + número).
+/* --------------------------------------------------------------------
+   Credenciais do EmailJS (https://dashboard.emailjs.com/)
+   Preencha os três valores abaixo antes de publicar o site.
+   NUNCA insira a Private Key aqui — apenas a Public Key é segura
+   para uso no navegador (frontend).
+   -------------------------------------------------------------------- */
+const EMAILJS_PUBLIC_KEY = "CTmTLFF9PMpULG7Y0";
+const EMAILJS_SERVICE_ID = "service_3p6vz84";
+const EMAILJS_TEMPLATE_ID = "template_27v1fyu";
+
+// Inicializa o EmailJS assim que o SDK (carregado via CDN no index.html) estiver disponível.
+let emailjsPronto = false;
+if (typeof emailjs !== "undefined") {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+  emailjsPronto = true;
+}
+
+// WhatsApp: abre só com esta mensagem fixa, nunca com dados do formulário.
 const whatsappNumber = "5551996505850";
+const MENSAGEM_WHATSAPP =
+  "Olá! Acabei de preencher o formulário no site do HUB e quero ser colaborador.";
 
 export function init() {
   initParticles();
@@ -108,7 +127,7 @@ function initParticles() {
 }
 
 function initForm() {
-  const form = document.querySelector(".contact__form");
+  const form = document.getElementById("contactForm");
   if (!form) return;
 
   const submit = form.querySelector(".contact__submit");
@@ -116,23 +135,82 @@ function initForm() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    if (submit.disabled) return; // já está enviando, evita envio duplicado
+
     const dados = capturarDadosFormulario(form);
     const camposInvalidos = validarFormulario(dados);
 
     marcarCamposComErro(form, camposInvalidos);
 
     if (camposInvalidos.length > 0) {
-      exibirFeedbackErro(form, "Preencha todos os campos antes de continuar.");
+      exibirFeedback(
+        form,
+        "Preencha todos os campos antes de continuar.",
+        "erro",
+      );
       return;
     }
 
-    limparFeedbackErro(form);
-
-    const mensagem = montarMensagem(dados);
-    enviarWhatsApp(mensagem);
-
-    animarEnvio(submit, form);
+    limparFeedback(form);
+    enviarFormulario(form, submit);
   });
+}
+
+/**
+ * Envia o formulário completo por e-mail via EmailJS. Só abre o
+ * WhatsApp (com mensagem fixa, sem dados pessoais) depois que o
+ * EmailJS confirmar o envio com sucesso.
+ */
+function enviarFormulario(form, submit) {
+  if (!emailjsPronto) {
+    exibirFeedback(
+      form,
+      "Não foi possível conectar ao serviço de e-mail. Tente novamente em instantes.",
+      "erro",
+    );
+    return;
+  }
+
+  const textoOriginal = submit.textContent;
+  submit.disabled = true;
+  submit.textContent = "Enviando...";
+  submit.style.opacity = "0.85";
+
+  emailjs
+    .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+    .then(() => {
+      abrirWhatsApp();
+      exibirFeedback(
+        form,
+        "Recebemos seu interesse! Abrindo o WhatsApp...",
+        "sucesso",
+      );
+      form.reset();
+    })
+    .catch((erro) => {
+      console.error("Falha ao enviar formulário via EmailJS:", erro);
+      exibirFeedback(
+        form,
+        "Não foi possível enviar seu formulário agora. Tente novamente.",
+        "erro",
+      );
+      // Em caso de erro, os dados preenchidos permanecem no formulário.
+    })
+    .finally(() => {
+      submit.disabled = false;
+      submit.textContent = textoOriginal;
+      submit.style.opacity = "1";
+    });
+}
+
+/**
+ * Abre uma nova aba no WhatsApp com a mensagem fixa (sem dados do
+ * formulário), chamada apenas após o EmailJS confirmar o envio.
+ */
+function abrirWhatsApp() {
+  const texto = encodeURIComponent(MENSAGEM_WHATSAPP);
+  const url = `https://wa.me/${whatsappNumber}?text=${texto}`;
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 /**
@@ -172,32 +250,6 @@ function validarFormulario(dados) {
     .map((campo) => campo.id);
 }
 
-function montarMensagem(dados) {
-  const linha = "\u{2501}".repeat(22); // ━━━━━━━━━━━━━━━━━━━━━━ (caractere de linha, não é emoji)
-
-  return (
-    `>> Novo interessado no HUB de Negócios\n\n` +
-    `*Nome:*\n${dados.nome}\n\n` +
-    `*Telefone:*\n${dados.telefone}\n\n` +
-    `*Localização:*\n${dados.cidade} - ${dados.estado}\n\n` +
-    `*Profissão:*\n${dados.profissao}\n\n` +
-    `*Já trabalha com vendas?*\n${dados.vendas}\n\n` +
-    `*Objetivo:*\n${dados.objetivo}\n\n` +
-    `*Plano de interesse:*\n${dados.plano}\n` +
-    `${linha}\n` +
-    `Mensagem enviada automaticamente através do formulário do site do HUB de Negócios.`
-  );
-}
-
-/**
- * Abre uma nova aba no WhatsApp Web/App com a mensagem já preenchida.
- */
-function enviarWhatsApp(mensagem) {
-  const texto = encodeURIComponent(mensagem);
-  const url = `https://wa.me/${whatsappNumber}?text=${texto}`;
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
 /**
  * Adiciona/remove a classe visual de erro em cada campo do formulário.
  */
@@ -212,20 +264,24 @@ function marcarCamposComErro(form, camposInvalidos) {
 }
 
 /**
- * Mostra uma mensagem de erro discreta abaixo do formulário e leva
- * o usuário até o primeiro campo que falta preencher.
+ * Mostra uma mensagem de feedback (erro ou sucesso) abaixo do botão
+ * de envio. Em caso de erro de campos obrigatórios, também leva o
+ * usuário até o primeiro campo que falta preencher.
  */
-function exibirFeedbackErro(form, texto) {
+function exibirFeedback(form, texto, tipo) {
   let feedback = form.querySelector(".contact__feedback");
 
   if (!feedback) {
     feedback = document.createElement("p");
-    feedback.className = "contact__feedback";
     form
       .querySelector(".contact__submit")
       .insertAdjacentElement("afterend", feedback);
   }
 
+  feedback.className =
+    tipo === "sucesso"
+      ? "contact__feedback contact__feedback--sucesso"
+      : "contact__feedback";
   feedback.textContent = texto;
 
   const primeiroComErro = form.querySelector(
@@ -236,26 +292,7 @@ function exibirFeedbackErro(form, texto) {
   }
 }
 
-function limparFeedbackErro(form) {
+function limparFeedback(form) {
   const feedback = form.querySelector(".contact__feedback");
   if (feedback) feedback.remove();
-}
-
-/**
- * Feedback visual no botão após o envio (WhatsApp já foi aberto).
- */
-function animarEnvio(submit, form) {
-  if (!submit) return;
-
-  const original = submit.textContent;
-  submit.textContent = "Abrindo WhatsApp...";
-  submit.disabled = true;
-  submit.style.opacity = "0.85";
-
-  setTimeout(() => {
-    submit.textContent = original;
-    submit.disabled = false;
-    submit.style.opacity = "1";
-    form.reset();
-  }, 2600);
 }

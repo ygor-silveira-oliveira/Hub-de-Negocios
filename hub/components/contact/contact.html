@@ -34,7 +34,14 @@
         </ul>
       </div>
 
-      <form class="contact__form reveal" data-delay="1" novalidate>
+      <form
+        id="contactForm"
+        class="contact__form reveal"
+        data-delay="1"
+        novalidate
+      >
+        <!-- Campo oculto: usado pelo template do EmailJS como e-mail de destino -->
+        <input type="hidden" name="to_email" value="oygor31@gmail.com" />
         <div class="contact__row">
           <div class="contact__field">
             <label for="cName">Nome completo</label>
