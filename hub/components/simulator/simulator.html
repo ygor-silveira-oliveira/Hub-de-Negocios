@@ -1,29 +1,34 @@
 <div class="simulator section">
   <div class="container">
-    <div class="simulator__wrap">
-      <div class="simulator__intro reveal">
-        <span class="section-tag">Simulador</span>
-        <h2 class="section-title">Visualize seu potencial</h2>
-        <p class="section-subtitle">
-          Uma prévia do que você pode construir. Selecione um perfil e veja a
-          projeção de receita imediata, recorrente e patrimônio.
-        </p>
+    <div class="simulator__head reveal">
+      <span class="section-tag">Simulador</span>
+      <h2 class="section-title">Visualize seu potencial</h2>
+      <p class="section-subtitle">
+        Escolha seu plano, selecione uma oportunidade e veja a estimativa de
+        comissão atualizar em tempo real.
+      </p>
+    </div>
 
+    <div class="simulator__wrap reveal" data-delay="1">
+      <!-- ETAPA 1: escolha do plano -->
+      <div class="simulator__step">
+        <span class="simulator__step-label">1. Escolha seu plano</span>
         <div
-          class="simulator__selector"
+          class="simulator__plans"
+          id="simPlans"
           role="tablist"
-          aria-label="Perfil de simulação"
+          aria-label="Escolha de plano"
         >
           <button
-            class="simulator__pill is-active"
-            data-plan="start"
+            class="simulator__plan-btn is-active"
+            data-plan="simples"
             role="tab"
             aria-selected="true"
           >
-            Start
+            Simples
           </button>
           <button
-            class="simulator__pill"
+            class="simulator__plan-btn"
             data-plan="pro"
             role="tab"
             aria-selected="false"
@@ -31,7 +36,7 @@
             Pro
           </button>
           <button
-            class="simulator__pill"
+            class="simulator__plan-btn"
             data-plan="prime"
             role="tab"
             aria-selected="false"
@@ -39,80 +44,326 @@
             Prime
           </button>
         </div>
-
-        <div class="simulator__slider">
-          <div class="simulator__slider-head">
-            <label for="simClients">Clientes ativos na sua carteira</label>
-            <span class="simulator__slider-value" id="simClientsValue">12</span>
-          </div>
-          <input
-            type="range"
-            id="simClients"
-            class="simulator__range"
-            min="1"
-            max="200"
-            step="1"
-            value="12"
-            aria-label="Número de clientes ativos"
-          />
-          <div class="simulator__slider-scale">
-            <span>1</span>
-            <span>200</span>
-          </div>
-        </div>
-
-        <p class="simulator__note">
-          * Simulação ilustrativa com base no ticket médio de cada plano.
-          Resultados variam conforme dedicação e carteira construída.
-        </p>
       </div>
 
-      <div class="simulator__card reveal" data-delay="2">
-        <div class="simulator__card-glow" aria-hidden="true"></div>
-
-        <div class="simulator__card-head">
-          <span class="simulator__card-label"
-            >Projeção — Plano <strong id="simPlanName">Start</strong></span
+      <!-- ETAPA 2: escolha do serviço (filtrado pelo plano) -->
+      <div class="simulator__step">
+        <span class="simulator__step-label">2. Escolha uma oportunidade</span>
+        <div
+          class="simulator__services"
+          id="simServices"
+          role="tablist"
+          aria-label="Escolha de serviço"
+        >
+          <button
+            class="simulator__service-btn"
+            data-service="clt"
+            role="tab"
+            aria-selected="false"
           >
-          <span class="simulator__badge" id="simPayback"
-            >Payback 3–4 meses</span
+            Crédito CLT
+          </button>
+          <button
+            class="simulator__service-btn"
+            data-service="saque"
+            role="tab"
+            aria-selected="false"
           >
+            Saque-Aniversário
+          </button>
+          <button
+            class="simulator__service-btn"
+            data-service="loovi"
+            role="tab"
+            aria-selected="false"
+          >
+            Seguros / Loovi
+          </button>
+          <button
+            class="simulator__service-btn"
+            data-service="agv"
+            role="tab"
+            aria-selected="false"
+          >
+            Universo AGV
+          </button>
+          <button
+            class="simulator__service-btn"
+            data-service="igreen"
+            role="tab"
+            aria-selected="false"
+          >
+            iGreen Energy
+          </button>
         </div>
+      </div>
 
-        <div class="simulator__metric simulator__metric--main">
-          <span class="simulator__metric-label">Receita mensal estimada</span>
-          <span class="simulator__metric-value" id="simMonthly">R$ 288</span>
-        </div>
+      <!-- ETAPA 3 + 4: campos do serviço selecionado + resultado -->
+      <div class="simulator__panel-wrap">
+        <!-- CRÉDITO CLT -->
+        <div class="simulator__panel" data-panel="clt" hidden>
+          <div class="simulator__panel-glow" aria-hidden="true"></div>
 
-        <div class="simulator__metric-grid">
-          <div class="simulator__metric">
-            <span class="simulator__metric-label">Receita anual</span>
-            <span
-              class="simulator__metric-value simulator__metric-value--sm"
-              id="simYearly"
-              >R$ 3.456</span
+          <div class="simulator__field">
+            <div class="simulator__field-head">
+              <label for="cltValor">Valor do crédito</label>
+              <span class="simulator__field-value" id="cltValorLabel"
+                >R$ 10.000</span
+              >
+            </div>
+            <input
+              type="range"
+              id="cltValor"
+              class="simulator__range"
+              min="1000"
+              max="30000"
+              step="100"
+              value="10000"
+            />
+            <div class="simulator__slider-scale">
+              <span>R$ 1.000</span>
+              <span>R$ 30.000</span>
+            </div>
+          </div>
+
+          <div class="simulator__field">
+            <span class="simulator__field-label">Prazo</span>
+            <div
+              class="simulator__terms"
+              id="cltPrazos"
+              role="tablist"
+              aria-label="Prazo do crédito"
+            >
+              <button class="simulator__term-btn" data-prazo="12">12x</button>
+              <button class="simulator__term-btn" data-prazo="18">18x</button>
+              <button class="simulator__term-btn" data-prazo="24">24x</button>
+              <button class="simulator__term-btn" data-prazo="30">30x</button>
+              <button
+                class="simulator__term-btn is-active"
+                data-prazo="36"
+              >
+                36x
+              </button>
+            </div>
+          </div>
+
+          <div class="simulator__result">
+            <span class="simulator__result-label"
+              >Potencial de comissão</span
+            >
+            <span class="simulator__result-value" id="cltResultado"
+              >R$ 0,00</span
+            >
+            <span class="simulator__result-caption"
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB.</span
             >
           </div>
-          <div class="simulator__metric">
-            <span class="simulator__metric-label">Recorrência (após 12m)</span>
-            <span
-              class="simulator__metric-value simulator__metric-value--sm"
-              id="simRecurring"
-              >—</span
+        </div>
+
+        <!-- SAQUE-ANIVERSÁRIO -->
+        <div class="simulator__panel" data-panel="saque" hidden>
+          <div class="simulator__panel-glow" aria-hidden="true"></div>
+
+          <div class="simulator__field">
+            <div class="simulator__field-head">
+              <label for="saqueValor">Valor da antecipação</label>
+              <span class="simulator__field-value" id="saqueValorLabel"
+                >R$ 2.000</span
+              >
+            </div>
+            <input
+              type="range"
+              id="saqueValor"
+              class="simulator__range"
+              min="50"
+              max="9080"
+              step="10"
+              value="2000"
+            />
+            <div class="simulator__slider-scale">
+              <span>R$ 50</span>
+              <span>R$ 9.080</span>
+            </div>
+          </div>
+
+          <div class="simulator__mini-metrics">
+            <div class="simulator__mini-metric">
+              <span class="simulator__mini-metric-label"
+                >Percentual aplicado</span
+              >
+              <span class="simulator__mini-metric-value" id="saquePercentual"
+                >—</span
+              >
+            </div>
+          </div>
+
+          <div class="simulator__result">
+            <span class="simulator__result-label"
+              >Potencial de comissão</span
+            >
+            <span class="simulator__result-value" id="saqueResultado"
+              >R$ 0,00</span
+            >
+            <span class="simulator__result-caption"
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB.</span
             >
           </div>
         </div>
 
-        <div class="simulator__bar" aria-hidden="true">
-          <div class="simulator__bar-fill" id="simBar" style="width: 30%"></div>
-        </div>
-        <span class="simulator__bar-caption"
-          >Potencial de construção de patrimônio</span
-        >
+        <!-- SEGUROS / LOOVI -->
+        <div class="simulator__panel simulator__panel--loovi" data-panel="loovi" hidden>
+          <div class="simulator__panel-glow" aria-hidden="true"></div>
 
-        <a href="#contato" class="btn btn-primary simulator__cta"
-          >Quero esse resultado</a
-        >
+          <span class="simulator__loovi-tag">LOOVI SEGUROS</span>
+          <p class="simulator__loovi-text">
+            Uma oportunidade para ampliar seu ecossistema de serviços.
+            Conheça o modelo de atuação e as possibilidades de
+            comissionamento.
+          </p>
+
+          <div class="simulator__loovi-levels" aria-hidden="true">
+            <span class="simulator__loovi-level"></span>
+            <span class="simulator__loovi-level"></span>
+            <span class="simulator__loovi-level"></span>
+            <span class="simulator__loovi-level"></span>
+          </div>
+          <span class="simulator__loovi-levels-caption"
+            >Modelo com diferentes níveis de desenvolvimento e
+            comissionamento.</span
+          >
+
+          <a href="#contato" class="btn btn-primary simulator__cta"
+            >Quero saber mais</a
+          >
+        </div>
+
+        <!-- SEGURO DE CARROS — UNIVERSO AGV -->
+        <div class="simulator__panel" data-panel="agv" hidden>
+          <div class="simulator__panel-glow" aria-hidden="true"></div>
+
+          <div class="simulator__field">
+            <span class="simulator__field-label">Quantidade de seguros</span>
+            <div class="simulator__stepper">
+              <button
+                type="button"
+                class="simulator__stepper-btn"
+                id="agvMenos"
+                aria-label="Diminuir quantidade"
+              >
+                −
+              </button>
+              <input
+                type="number"
+                id="agvQtd"
+                class="simulator__stepper-input"
+                min="0"
+                step="1"
+                value="1"
+                inputmode="numeric"
+              />
+              <button
+                type="button"
+                class="simulator__stepper-btn"
+                id="agvMais"
+                aria-label="Aumentar quantidade"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div class="simulator__mini-metrics">
+            <div class="simulator__mini-metric">
+              <span class="simulator__mini-metric-label"
+                >Comissão por seguro</span
+              >
+              <span class="simulator__mini-metric-value">R$ 500,00</span>
+            </div>
+          </div>
+
+          <div class="simulator__result">
+            <span class="simulator__result-label"
+              >Potencial de comissão</span
+            >
+            <span class="simulator__result-value" id="agvResultado"
+              >R$ 0,00</span
+            >
+            <span class="simulator__result-caption"
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB.</span
+            >
+          </div>
+        </div>
+
+        <!-- IGREEN ENERGY -->
+        <div class="simulator__panel" data-panel="igreen" hidden>
+          <div class="simulator__panel-glow" aria-hidden="true"></div>
+
+          <div class="simulator__row">
+            <div class="simulator__field simulator__field--inline">
+              <label for="igreenConta">Valor médio da conta de energia</label>
+              <div class="simulator__input-prefix">
+                <span>R$</span>
+                <input
+                  type="number"
+                  id="igreenConta"
+                  min="0"
+                  step="1"
+                  value="200"
+                  inputmode="decimal"
+                />
+              </div>
+            </div>
+
+            <div class="simulator__field simulator__field--inline">
+              <label for="igreenConexoes">Conexões ativadas no mês</label>
+              <input
+                type="number"
+                id="igreenConexoes"
+                class="simulator__input-plain"
+                min="0"
+                step="1"
+                value="10"
+                inputmode="numeric"
+              />
+            </div>
+          </div>
+
+          <div class="simulator__mini-metrics">
+            <div class="simulator__mini-metric">
+              <span class="simulator__mini-metric-label"
+                >Percentual aplicado</span
+              >
+              <span class="simulator__mini-metric-value" id="igreenPercentual"
+                >—</span
+              >
+            </div>
+            <div class="simulator__mini-metric">
+              <span class="simulator__mini-metric-label"
+                >Comissão estimada por conexão</span
+              >
+              <span class="simulator__mini-metric-value" id="igreenPorConexao"
+                >R$ 0,00</span
+              >
+            </div>
+          </div>
+
+          <div class="simulator__result">
+            <span class="simulator__result-label"
+              >Potencial estimado (todas as conexões)</span
+            >
+            <span class="simulator__result-value" id="igreenResultado"
+              >R$ 0,00</span
+            >
+            <span class="simulator__result-caption"
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB. O percentual promocional substitui a recorrência
+              padrão de 3%.</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
