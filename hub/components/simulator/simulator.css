@@ -54,7 +54,9 @@
   font-size: clamp(0.82rem, 1vw, 0.92rem);
   font-weight: 600;
   color: var(--text-muted);
-  transition: color 0.25s ease, background 0.25s ease;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
 }
 
 .simulator__plan-btn.is-active {
@@ -77,7 +79,10 @@
   color: var(--text-muted);
   background: var(--surface);
   border: 1px solid var(--border);
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
     opacity 0.2s ease;
 }
 
@@ -217,7 +222,10 @@
   color: var(--text-muted);
   background: var(--surface);
   border: 1px solid var(--border);
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .simulator__term-btn.is-active {
@@ -243,7 +251,9 @@
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--text);
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .simulator__stepper-btn:hover {
@@ -382,9 +392,15 @@
   max-width: 48ch;
 }
 
-/* Loovi: painel sem calculadora, foco em despertar interesse */
+/* Loovi: simulação de evolução de nível (vendas/contratos -> nível
+   potencial). Reaproveita os mesmos sliders e tokens visuais dos
+   outros serviços; só os blocos abaixo são específicos da Loovi. */
 .simulator__panel--loovi {
   text-align: center;
+}
+
+.simulator__panel--loovi .simulator__field {
+  text-align: left;
 }
 
 .simulator__loovi-tag {
@@ -403,44 +419,140 @@
 .simulator__loovi-text {
   max-width: 46ch;
   margin-inline: auto;
+  margin-bottom: clamp(24px, 3.5vw, 32px);
   color: var(--text-muted);
   font-size: 0.98rem;
   line-height: 1.6;
 }
 
-.simulator__loovi-levels {
+/* resultado: nível potencial + próximo nível lado a lado */
+.simulator__loovi-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: clamp(20px, 3vw, 28px);
+  padding-top: clamp(20px, 3vw, 26px);
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.simulator__loovi-result-block {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   gap: 6px;
-  margin-top: 26px;
 }
 
-.simulator__loovi-level {
-  width: 40px;
-  height: 8px;
-  border-radius: 100px;
-  background: linear-gradient(90deg, var(--brand-dim), var(--brand));
-  opacity: 0.35;
+.simulator__loovi-nivel-atual {
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--brand);
+  line-height: 1.15;
 }
 
-.simulator__loovi-level:nth-child(1) {
-  opacity: 0.4;
+.simulator__loovi-nivel-proximo {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.15;
 }
-.simulator__loovi-level:nth-child(2) {
+
+.simulator__loovi-progresso {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* trilha de progressão: Júnior -> Sênior -> Premium -> Elite -> Black -> Select */
+.simulator__loovi-progressao {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: clamp(24px, 3.5vw, 32px);
+}
+
+.simulator__loovi-step {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* linha conectando os steps, atrás dos pontos */
+.simulator__loovi-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: calc(50% + 12px);
+  width: calc(100% - 24px);
+  height: 2px;
+  background: var(--border-strong);
+}
+
+.simulator__loovi-step.is-done:not(:last-child)::after {
+  background: var(--brand-dim);
+}
+
+.simulator__loovi-step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+  z-index: 1;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.simulator__loovi-step-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.simulator__loovi-step.is-done .simulator__loovi-step-dot {
+  background: var(--brand-dim);
+  border-color: var(--brand-dim);
+}
+
+.simulator__loovi-step.is-done .simulator__loovi-step-label {
+  color: var(--text-muted);
+}
+
+.simulator__loovi-step.is-current .simulator__loovi-step-dot {
+  background: var(--brand);
+  border-color: var(--brand);
+  transform: scale(1.35);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
+}
+
+.simulator__loovi-step.is-current .simulator__loovi-step-label {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.simulator__loovi-step.is-locked .simulator__loovi-step-dot {
+  opacity: 0.5;
+}
+
+.simulator__loovi-step.is-locked .simulator__loovi-step-label {
+  color: var(--text-dim);
   opacity: 0.6;
-}
-.simulator__loovi-level:nth-child(3) {
-  opacity: 0.8;
-}
-.simulator__loovi-level:nth-child(4) {
-  opacity: 1;
 }
 
 .simulator__loovi-levels-caption {
   display: block;
-  margin-top: 10px;
+  max-width: 52ch;
+  margin: clamp(18px, 2.5vw, 24px) auto 0;
   font-size: 0.76rem;
   color: var(--text-dim);
+  line-height: 1.6;
 }
 
 .simulator__cta {
@@ -468,6 +580,42 @@
 
   .simulator__panel {
     padding: 22px 18px;
+  }
+
+  .simulator__loovi-result {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .simulator__loovi-result-block {
+    align-items: center;
+  }
+
+  /* trilha horizontal vira sequência vertical pra não estourar a tela */
+  .simulator__loovi-progressao {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .simulator__loovi-step {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    padding-block: 6px;
+  }
+
+  .simulator__loovi-step-label {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .simulator__loovi-step:not(:last-child)::after {
+    top: 20px;
+    left: 5px;
+    width: 2px;
+    height: calc(100% - 8px);
   }
 }
 
