@@ -437,7 +437,7 @@ export function init() {
       looviNivelProximo.textContent = "—";
       looviProgresso.textContent =
         nivelAtual === "elite"
-          ? "Você atingiu o maior nível com critérios definidos no material da Loovi."
+          ? "Você atingiu o maior nível máximo do simulador! Entre em contato para saber sobre os próximos níveis."
           : "";
       return;
     }

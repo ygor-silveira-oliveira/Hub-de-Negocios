@@ -1,104 +1,107 @@
 <div class="simulator section">
   <div class="container">
-    <div class="simulator__head reveal">
-      <span class="section-tag">Simulador</span>
-      <h2 class="section-title">Visualize seu potencial</h2>
-      <p class="section-subtitle">
-        Escolha seu plano, selecione uma oportunidade e veja a estimativa de
-        comissão atualizar em tempo real.
-      </p>
-    </div>
-
     <div class="simulator__wrap reveal" data-delay="1">
-      <!-- ETAPA 1: escolha do plano -->
-      <div class="simulator__step">
-        <span class="simulator__step-label">1. Escolha seu plano</span>
-        <div
-          class="simulator__plans"
-          id="simPlans"
-          role="tablist"
-          aria-label="Escolha de plano"
-        >
-          <button
-            class="simulator__plan-btn is-active"
-            data-plan="simples"
-            role="tab"
-            aria-selected="true"
+      <!-- COLUNA ESQUERDA: título + etapa 1 (plano) + etapa 2 (oportunidade) -->
+      <div class="simulator__left">
+        <div class="simulator__head">
+          <span class="section-tag">Simulador</span>
+          <h2 class="section-title">Visualize seu potencial</h2>
+          <p class="section-subtitle">
+            Escolha seu plano, selecione uma oportunidade e veja a
+            estimativa de comissão atualizar em tempo real.
+          </p>
+        </div>
+
+        <!-- ETAPA 1: escolha do plano -->
+        <div class="simulator__step">
+          <span class="simulator__step-label">1. Escolha seu plano</span>
+          <div
+            class="simulator__plans"
+            id="simPlans"
+            role="tablist"
+            aria-label="Escolha de plano"
           >
-            Simples
-          </button>
-          <button
-            class="simulator__plan-btn"
-            data-plan="pro"
-            role="tab"
-            aria-selected="false"
+            <button
+              class="simulator__plan-btn is-active"
+              data-plan="simples"
+              role="tab"
+              aria-selected="true"
+            >
+              Simples
+            </button>
+            <button
+              class="simulator__plan-btn"
+              data-plan="pro"
+              role="tab"
+              aria-selected="false"
+            >
+              Pro
+            </button>
+            <button
+              class="simulator__plan-btn"
+              data-plan="prime"
+              role="tab"
+              aria-selected="false"
+            >
+              Prime
+            </button>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: escolha do serviço (filtrado pelo plano) -->
+        <div class="simulator__step">
+          <span class="simulator__step-label">2. Escolha uma oportunidade</span>
+          <div
+            class="simulator__services"
+            id="simServices"
+            role="tablist"
+            aria-label="Escolha de serviço"
           >
-            Pro
-          </button>
-          <button
-            class="simulator__plan-btn"
-            data-plan="prime"
-            role="tab"
-            aria-selected="false"
-          >
-            Prime
-          </button>
+            <button
+              class="simulator__service-btn"
+              data-service="clt"
+              role="tab"
+              aria-selected="false"
+            >
+              Crédito CLT
+            </button>
+            <button
+              class="simulator__service-btn"
+              data-service="saque"
+              role="tab"
+              aria-selected="false"
+            >
+              Saque-Aniversário
+            </button>
+            <button
+              class="simulator__service-btn"
+              data-service="loovi"
+              role="tab"
+              aria-selected="false"
+            >
+              Seguros / Loovi
+            </button>
+            <button
+              class="simulator__service-btn"
+              data-service="agv"
+              role="tab"
+              aria-selected="false"
+            >
+              Universo AGV
+            </button>
+            <button
+              class="simulator__service-btn"
+              data-service="igreen"
+              role="tab"
+              aria-selected="false"
+            >
+              iGreen Energy
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- ETAPA 2: escolha do serviço (filtrado pelo plano) -->
-      <div class="simulator__step">
-        <span class="simulator__step-label">2. Escolha uma oportunidade</span>
-        <div
-          class="simulator__services"
-          id="simServices"
-          role="tablist"
-          aria-label="Escolha de serviço"
-        >
-          <button
-            class="simulator__service-btn"
-            data-service="clt"
-            role="tab"
-            aria-selected="false"
-          >
-            Crédito CLT
-          </button>
-          <button
-            class="simulator__service-btn"
-            data-service="saque"
-            role="tab"
-            aria-selected="false"
-          >
-            Saque-Aniversário
-          </button>
-          <button
-            class="simulator__service-btn"
-            data-service="loovi"
-            role="tab"
-            aria-selected="false"
-          >
-            Seguros / Loovi
-          </button>
-          <button
-            class="simulator__service-btn"
-            data-service="agv"
-            role="tab"
-            aria-selected="false"
-          >
-            Universo AGV
-          </button>
-          <button
-            class="simulator__service-btn"
-            data-service="igreen"
-            role="tab"
-            aria-selected="false"
-          >
-            iGreen Energy
-          </button>
-        </div>
-      </div>
-
-      <!-- ETAPA 3 + 4: campos do serviço selecionado + resultado -->
+      <!-- COLUNA DIREITA: campos do serviço selecionado + resultado -->
       <div class="simulator__panel-wrap">
         <!-- CRÉDITO CLT -->
         <div class="simulator__panel" data-panel="clt" hidden>
@@ -138,20 +141,25 @@
               <button class="simulator__term-btn" data-prazo="18">18x</button>
               <button class="simulator__term-btn" data-prazo="24">24x</button>
               <button class="simulator__term-btn" data-prazo="30">30x</button>
-              <button class="simulator__term-btn is-active" data-prazo="36">
+              <button
+                class="simulator__term-btn is-active"
+                data-prazo="36"
+              >
                 36x
               </button>
             </div>
           </div>
 
           <div class="simulator__result">
-            <span class="simulator__result-label">Potencial de comissão</span>
+            <span class="simulator__result-label"
+              >Potencial de comissão</span
+            >
             <span class="simulator__result-value" id="cltResultado"
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas pelo
-              HUB.</span
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB.</span
             >
           </div>
         </div>
@@ -194,29 +202,27 @@
           </div>
 
           <div class="simulator__result">
-            <span class="simulator__result-label">Potencial de comissão</span>
+            <span class="simulator__result-label"
+              >Potencial de comissão</span
+            >
             <span class="simulator__result-value" id="saqueResultado"
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas pelo
-              HUB.</span
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB.</span
             >
           </div>
         </div>
 
         <!-- SEGUROS / LOOVI -->
-        <div
-          class="simulator__panel simulator__panel--loovi"
-          data-panel="loovi"
-          hidden
-        >
+        <div class="simulator__panel simulator__panel--loovi" data-panel="loovi" hidden>
           <div class="simulator__panel-glow" aria-hidden="true"></div>
 
           <span class="simulator__loovi-tag">LOOVI SEGUROS</span>
           <p class="simulator__loovi-text">
-            Simule sua evolução de nível na estrutura da Loovi a partir do seu
-            volume de vendas e contratos ativos.
+            Simule sua evolução de nível na estrutura da Loovi a partir do
+            seu volume de vendas e contratos ativos.
           </p>
 
           <div class="simulator__field">
@@ -277,9 +283,7 @@
                 id="looviNivelProximo"
                 >—</span
               >
-              <span
-                class="simulator__loovi-progresso"
-                id="looviProgresso"
+              <span class="simulator__loovi-progresso" id="looviProgresso"
               ></span>
             </div>
           </div>
@@ -292,8 +296,8 @@
 
           <span class="simulator__loovi-levels-caption">
             Simulação de evolução baseada no modelo de níveis da Loovi.
-            Categoria de comissionamento (Bronze / Prata / Ouro) e as regras de
-            Premium e Elite são detalhadas no contato com o HUB.
+            Categoria de comissionamento (Bronze / Prata / Ouro) e as regras
+            de Premium e Elite são detalhadas no contato com o HUB.
           </span>
 
           <a href="#contato" class="btn btn-primary simulator__cta"
@@ -346,13 +350,15 @@
           </div>
 
           <div class="simulator__result">
-            <span class="simulator__result-label">Potencial de comissão</span>
+            <span class="simulator__result-label"
+              >Potencial de comissão</span
+            >
             <span class="simulator__result-value" id="agvResultado"
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas pelo
-              HUB.</span
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB.</span
             >
           </div>
         </div>
@@ -418,9 +424,9 @@
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas pelo
-              HUB. O percentual promocional substitui a recorrência padrão de
-              3%.</span
+              >Estimativa baseada nas regras de comissionamento informadas
+              pelo HUB. O percentual promocional substitui a recorrência
+              padrão de 3%.</span
             >
           </div>
         </div>
