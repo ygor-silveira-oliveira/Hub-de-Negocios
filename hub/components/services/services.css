@@ -79,6 +79,71 @@
   height: 26px;
 }
 
+/* ---------- Service logos (Crédito / Seguros / Energia) ---------- */
+.services__logo-box {
+  height: 54px;
+  width: fit-content;
+  min-width: 54px;
+  max-width: 140px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(245, 245, 247, 0.94);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.services__logo-box img {
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+}
+
+.services__logo-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.services__logo-group .services__logo-box {
+  margin-bottom: 0;
+  width: 54px;
+  height: 54px;
+  padding: 6px;
+}
+
+.services__card:hover .services__logo-box {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(34, 197, 94, 0.35);
+}
+
+@media (max-width: 640px) {
+  .services__logo-box {
+    height: 46px;
+    max-width: 120px;
+    padding: 6px 8px;
+  }
+  .services__logo-group .services__logo-box {
+    width: 46px;
+    height: 46px;
+    padding: 5px;
+  }
+  .services__logo-group {
+    gap: 8px;
+  }
+}
+
 .services__card h3 {
   font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   font-weight: 600;
