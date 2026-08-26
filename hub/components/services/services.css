@@ -116,6 +116,14 @@
   min-width: 64px;
 }
 
+.services__logo-group .services__logo-box img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 .services__card:hover .services__logo-box {
   transform: scale(1.05);
 }
@@ -130,6 +138,10 @@
     width: 52px;
     height: 52px;
     min-width: 52px;
+  }
+  .services__logo-group .services__logo-box img {
+    width: 100%;
+    height: 100%;
   }
   .services__logo-group {
     gap: 10px;
