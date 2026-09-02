@@ -11,7 +11,7 @@
    para uso no navegador (frontend).
    -------------------------------------------------------------------- */
 const EMAILJS_PUBLIC_KEY = "CTmTLFF9PMpULG7Y0";
-const EMAILJS_SERVICE_ID = "service_3p6vz84";
+const EMAILJS_SERVICE_ID = "service_4bffg5m";
 const EMAILJS_TEMPLATE_ID = "template_27v1fyu";
 
 // Inicializa o EmailJS assim que o SDK (carregado via CDN no index.html) estiver disponível.
