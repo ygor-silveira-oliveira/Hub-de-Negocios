@@ -104,6 +104,85 @@ function calcularAGV(quantidade) {
 
 /* ================================================================== */
 
+/* ==================== TOTAL ACUMULADO DOS SIMULADORES ====================
+   Painel que soma o valor PRINCIPAL de cada simulador (o mesmo número
+   que aparece no ".simulator__result-value" de cada painel).
+
+   - Guardado só em memória (objeto abaixo): some ao dar F5, como pedido.
+   - Cada simulador ocupa sempre a mesma posição no objeto/lista; ao
+     recalcular, o valor antigo é SUBSTITUÍDO (não somado), então não
+     tem duplicidade quando o usuário edita os campos várias vezes.
+   - Pra adicionar um novo simulador no futuro: só incluir uma entrada
+     nova em SIMULADORES_TOTAL e chamar atualizarTotalSimulador(id, valor)
+     dentro da função de recálculo dele. Não precisa mexer no resto.
+   ========================================================================= */
+
+const SIMULADORES_TOTAL = [
+  { id: "saque", label: "Saque-Aniversário" },
+  { id: "clt", label: "Crédito CLT" },
+  { id: "agv", label: "Seguros (Universo AGV)" },
+  { id: "igreen", label: "iGreen Energy" },
+  { id: "loovi", label: "Seguros (Loovi)" },
+];
+
+/* Valor principal atual de cada simulador. Começa tudo zerado. */
+const totaisSimuladores = SIMULADORES_TOTAL.reduce((acc, sim) => {
+  acc[sim.id] = 0;
+  return acc;
+}, {});
+
+let servicoAtivoNoTotal = null;
+
+/* Plano atualmente selecionado (Simples/Pro/Prime) — o painel de total
+   só lista/soma os serviços que esse plano libera (mesma lista usada
+   pra habilitar os botões da Etapa 2, em PLANOS). */
+let planoAtualNoTotal = "simples";
+
+function renderizarTotalPainel() {
+  const lista = document.getElementById("simTotalList");
+  const totalGeralEl = document.getElementById("simTotalGeral");
+
+  if (!lista || !totalGeralEl) return;
+
+  const liberadosNoPlano = PLANOS[planoAtualNoTotal] || [];
+
+  let totalGeral = 0;
+
+  lista.innerHTML = SIMULADORES_TOTAL.filter((sim) =>
+    liberadosNoPlano.includes(sim.id),
+  )
+    .map((sim) => {
+      const valor = totaisSimuladores[sim.id] || 0;
+
+      totalGeral += valor;
+
+      const ativo = sim.id === servicoAtivoNoTotal ? " is-current" : "";
+
+      return `
+        <li class="simulator__total-row${ativo}">
+          <span class="simulator__total-row-label">${sim.label}</span>
+          <span class="simulator__total-row-value">${formatBRL(valor)}</span>
+        </li>
+      `;
+    })
+    .join("");
+
+  totalGeralEl.textContent = formatBRL(totalGeral);
+}
+
+/* Chamada pelas funções de recálculo de cada simulador, sempre com o
+   valor PRINCIPAL daquele resultado (ex.: comissão, total estimado).
+   Substitui o valor anterior daquele serviço — nunca soma em cima. */
+function atualizarTotalSimulador(servico, valor) {
+  const valorNumerico = Number.isFinite(valor) ? valor : 0;
+
+  totaisSimuladores[servico] = valorNumerico;
+
+  renderizarTotalPainel();
+}
+
+/* ================================================================== */
+
 export function init() {
   const planBtns = document.querySelectorAll(".simulator__plan-btn");
   const serviceBtns = document.querySelectorAll(".simulator__service-btn");
@@ -115,6 +194,9 @@ export function init() {
 
   function atualizarServicosDisponiveis() {
     const liberados = PLANOS[planoAtual] || [];
+
+    planoAtualNoTotal = planoAtual;
+    renderizarTotalPainel();
 
     serviceBtns.forEach((btn) => {
       const servico = btn.dataset.service;
@@ -151,6 +233,8 @@ export function init() {
     paineis.forEach((painel) => {
       painel.hidden = painel.dataset.panel !== servico;
     });
+
+    servicoAtivoNoTotal = servico;
 
     recalcularServico(servico);
   }
@@ -209,6 +293,8 @@ export function init() {
     const comissao = calcularCLT(valor, cltPrazoAtual);
 
     cltResultado.textContent = formatBRL(comissao);
+
+    atualizarTotalSimulador("clt", comissao);
   }
 
   if (cltValor) {
@@ -250,6 +336,8 @@ export function init() {
       : "—";
 
     saqueResultado.textContent = formatBRL(comissao);
+
+    atualizarTotalSimulador("saque", comissao);
   }
 
   if (saqueValor) {
@@ -274,7 +362,11 @@ export function init() {
 
     agvQtd.value = qtd;
 
-    agvResultado.textContent = formatBRL(calcularAGV(qtd));
+    const comissaoAgv = calcularAGV(qtd);
+
+    agvResultado.textContent = formatBRL(comissaoAgv);
+
+    atualizarTotalSimulador("agv", comissaoAgv);
   }
 
   if (agvQtd) {
@@ -330,6 +422,8 @@ export function init() {
       : "—";
 
     igreenResultado.textContent = formatBRL(potencial);
+
+    atualizarTotalSimulador("igreen", potencial);
   }
 
   if (igreenConta) {
@@ -365,7 +459,11 @@ export function init() {
 
     looviValorLabel.textContent = formatBRL(looviValorAtual);
 
-    looviResultado.textContent = formatBRL(calcularLoovi(qtd, looviValorAtual));
+    const totalLoovi = calcularLoovi(qtd, looviValorAtual);
+
+    looviResultado.textContent = formatBRL(totalLoovi);
+
+    atualizarTotalSimulador("loovi", totalLoovi);
   }
 
   if (looviQtd) {
@@ -416,5 +514,6 @@ export function init() {
 
   /* ---------- Estado inicial ---------- */
 
+  renderizarTotalPainel();
   atualizarServicosDisponiveis();
 }

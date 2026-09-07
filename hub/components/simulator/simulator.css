@@ -108,6 +108,83 @@
   display: none;
 }
 
+/* ---------- Painel: total acumulado dos simuladores ---------- */
+.simulator__total-panel {
+  padding: clamp(20px, 3vw, 26px);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.simulator__total-title {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.simulator__total-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.simulator__total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+}
+
+.simulator__total-row.is-current .simulator__total-row-label {
+  color: var(--text);
+}
+
+.simulator__total-row.is-current .simulator__total-row-value {
+  color: var(--brand);
+}
+
+.simulator__total-row-label {
+  color: var(--text-muted);
+}
+
+.simulator__total-row-value {
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.simulator__total-geral {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.simulator__total-geral-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.simulator__total-geral-value {
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---------- Painel do serviço selecionado ---------- */
 .simulator__panel-wrap {
   margin-top: 0;
@@ -531,5 +608,15 @@
   .simulator__plans,
   .simulator__services {
     justify-content: center;
+  }
+
+  .simulator__total-title,
+  .simulator__total-geral {
+    text-align: center;
+  }
+
+  .simulator__total-geral {
+    flex-direction: column;
+    gap: 4px;
   }
 }
