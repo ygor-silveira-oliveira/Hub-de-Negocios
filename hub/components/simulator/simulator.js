@@ -3,21 +3,16 @@
    do serviço -> 4) resultado em tempo real.
 
    Todas as regras comerciais ficam centralizadas nas constantes abaixo.
-   Se o HUB alterar algum percentual/valor no futuro, a alteração deve
-   ser feita em UM único lugar, aqui neste bloco.
    ================================================================== */
 
-/* -------- Quais serviços cada plano libera --------
-   O plano é só uma regra de ACESSO aos serviços — não altera o
-   percentual de comissão de cada serviço. */
+/* -------- Quais serviços cada plano libera -------- */
 const PLANOS = {
   simples: ["clt", "saque"],
   pro: ["clt", "saque", "loovi", "agv"],
   prime: ["clt", "saque", "loovi", "agv", "igreen"],
 };
 
-/* -------- Crédito CLT --------
-   Comissão = valor liberado × percentual do prazo escolhido. */
+/* -------- Crédito CLT -------- */
 const REGRAS_CLT = {
   12: 0.007,
   18: 0.019,
@@ -26,44 +21,33 @@ const REGRAS_CLT = {
   36: 0.059,
 };
 
-/* -------- Antecipação Saque-Aniversário --------
-   Comissão = valor da antecipação × percentual da faixa em que o
-   valor se encaixa. */
+/* -------- Antecipação Saque-Aniversário -------- */
 const REGRAS_SAQUE = [
   { min: 50, max: 350, pct: 0.4 },
   { min: 350.01, max: 4700, pct: 0.26 },
   { min: 4700.01, max: 9080, pct: 0.2 },
 ];
 
-/* -------- iGreen Energy (somente plano Prime) --------
-   O percentual promocional SUBSTITUI os 3% de recorrência padrão —
-   nunca somar os dois.
+/* -------- iGreen Energy --------
+   O percentual aplicado depende da quantidade de contas ativas.
+   A regra anterior de 3% de recorrência foi substituída por estas faixas.
 
-   ATENÇÃO / AMBIGUIDADE JÁ SINALIZADA AO CLIENTE:
-   Para a faixa de 1 a 9 conexões, a regra informada foi "até 4%",
-   sem detalhar uma progressão interna (ex: 1 conexão = X%, 5 conexões
-   = Y%). Enquanto essa progressão não for definida, usamos o valor
-   máximo informado (4%) fixo para toda a faixa de 1 a 9 conexões.
-   Ajustar apenas este objeto quando a regra for detalhada. */
+   1 a 20 contas ativas = 3%
+   21 a 40 contas ativas = 20%
+   41 ou mais contas ativas = 40%
+
+   NÃO somar os percentuais.
+   ================================================================== */
 const REGRAS_IGREEN = [
-  {
-    min: 1,
-    max: 9,
-    pct: 0.04,
-    obs: "Regra informada como 'até 4%' — usando o valor máximo (4%) até definição de uma progressão interna.",
-  },
-  { min: 10, max: 39, pct: 0.2 },
-  { min: 40, max: Infinity, pct: 0.4 },
+  { min: 1, max: 20, pct: 0.03 },
+  { min: 21, max: 40, pct: 0.2 },
+  { min: 41, max: Infinity, pct: 0.4 },
 ];
 
-/* -------- Seguro de Carros — Universo AGV --------
-   Comissão fixa por seguro vendido. */
+/* -------- Seguro de Carros — Universo AGV -------- */
 const COMISSAO_AGV = 500;
 
-/* -------- Seguros / Loovi --------
-   Cálculo simples: quantidade de seguros vendidos × valor cobrado por
-   seguro. O valor cobrado é ajustável em incrementos fixos de R$50,00,
-   de R$50,00 até R$300,00 (definido diretamente pelo cliente). */
+/* -------- Seguros / Loovi -------- */
 const LOOVI_VALOR_MIN = 50;
 const LOOVI_VALOR_MAX = 300;
 const LOOVI_VALOR_PASSO = 50;
@@ -81,12 +65,12 @@ function formatBRL(valor) {
   });
 }
 
-/** Encontra a faixa de regra (saque ou iGreen) em que um valor se encaixa. */
 function encontrarFaixa(regras, valor) {
   return regras.find((faixa) => valor >= faixa.min && valor <= faixa.max);
 }
 
 /* -------- Cálculos de cada serviço -------- */
+
 function calcularCLT(valor, prazo) {
   const pct = REGRAS_CLT[prazo] || 0;
   return valor * pct;
@@ -94,14 +78,24 @@ function calcularCLT(valor, prazo) {
 
 function calcularSaque(valor) {
   const faixa = encontrarFaixa(REGRAS_SAQUE, valor);
-  return { faixa, comissao: faixa ? valor * faixa.pct : 0 };
+
+  return {
+    faixa,
+    comissao: faixa ? valor * faixa.pct : 0,
+  };
 }
 
-function calcularIgreen(valorConta, conexoes) {
-  const faixa = encontrarFaixa(REGRAS_IGREEN, conexoes);
-  const porConexao = faixa ? valorConta * faixa.pct : 0;
-  const potencial = porConexao * conexoes;
-  return { faixa, porConexao, potencial };
+function calcularIgreen(valorConta, contasAtivas) {
+  const faixa = encontrarFaixa(REGRAS_IGREEN, contasAtivas);
+
+  const porConta = faixa ? valorConta * faixa.pct : 0;
+  const potencial = porConta * contasAtivas;
+
+  return {
+    faixa,
+    porConta,
+    potencial,
+  };
 }
 
 function calcularAGV(quantidade) {
@@ -125,14 +119,15 @@ export function init() {
     serviceBtns.forEach((btn) => {
       const servico = btn.dataset.service;
       const disponivel = liberados.includes(servico);
+
       btn.hidden = !disponivel;
       btn.disabled = !disponivel;
     });
 
-    // Se o serviço ativo não estiver mais liberado, seleciona o primeiro disponível.
     const ativoAtual = document.querySelector(
       ".simulator__service-btn.is-active",
     );
+
     const servicoAtivo =
       ativoAtual && !ativoAtual.hidden ? ativoAtual.dataset.service : null;
 
@@ -148,6 +143,7 @@ export function init() {
 
     serviceBtns.forEach((btn) => {
       const ativo = btn.dataset.service === servico;
+
       btn.classList.toggle("is-active", ativo);
       btn.setAttribute("aria-selected", String(ativo));
     });
@@ -167,39 +163,51 @@ export function init() {
     else if (servico === "loovi") recalcularLoovi();
   }
 
-  // ---------- Etapa 1: planos ----------
+  /* ---------- Etapa 1: planos ---------- */
+
   planBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       planoAtual = btn.dataset.plan;
+
       planBtns.forEach((b) => {
         const ativo = b === btn;
+
         b.classList.toggle("is-active", ativo);
         b.setAttribute("aria-selected", String(ativo));
       });
+
       atualizarServicosDisponiveis();
     });
   });
 
-  // ---------- Etapa 2: serviços ----------
+  /* ---------- Etapa 2: serviços ---------- */
+
   serviceBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (btn.hidden || btn.disabled) return;
+
       mostrarServico(btn.dataset.service);
     });
   });
 
   /* ============================ CLT ============================ */
+
   const cltValor = document.getElementById("cltValor");
   const cltValorLabel = document.getElementById("cltValorLabel");
   const cltPrazos = document.getElementById("cltPrazos");
   const cltResultado = document.getElementById("cltResultado");
+
   let cltPrazoAtual = 36;
 
   function recalcularCLT() {
     if (!cltValor) return;
+
     const valor = Number(cltValor.value);
+
     cltValorLabel.textContent = formatBRL(valor);
+
     const comissao = calcularCLT(valor, cltPrazoAtual);
+
     cltResultado.textContent = formatBRL(comissao);
   }
 
@@ -211,15 +219,18 @@ export function init() {
     cltPrazos.querySelectorAll(".simulator__term-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         cltPrazoAtual = Number(btn.dataset.prazo);
+
         cltPrazos.querySelectorAll(".simulator__term-btn").forEach((b) => {
           b.classList.toggle("is-active", b === btn);
         });
+
         recalcularCLT();
       });
     });
   }
 
   /* ========================= SAQUE-ANIVERSÁRIO ========================= */
+
   const saqueValor = document.getElementById("saqueValor");
   const saqueValorLabel = document.getElementById("saqueValorLabel");
   const saquePercentual = document.getElementById("saquePercentual");
@@ -227,13 +238,17 @@ export function init() {
 
   function recalcularSaque() {
     if (!saqueValor) return;
+
     const valor = Number(saqueValor.value);
+
     saqueValorLabel.textContent = formatBRL(valor);
 
     const { faixa, comissao } = calcularSaque(valor);
+
     saquePercentual.textContent = faixa
       ? `${(faixa.pct * 100).toFixed(0)}%`
       : "—";
+
     saqueResultado.textContent = formatBRL(comissao);
   }
 
@@ -242,6 +257,7 @@ export function init() {
   }
 
   /* ============================ UNIVERSO AGV ============================ */
+
   const agvQtd = document.getElementById("agvQtd");
   const agvMenos = document.getElementById("agvMenos");
   const agvMais = document.getElementById("agvMais");
@@ -249,58 +265,83 @@ export function init() {
 
   function recalcularAGV() {
     if (!agvQtd) return;
+
     let qtd = parseInt(agvQtd.value, 10);
-    if (Number.isNaN(qtd) || qtd < 0) qtd = 0;
+
+    if (Number.isNaN(qtd) || qtd < 0) {
+      qtd = 0;
+    }
+
     agvQtd.value = qtd;
+
     agvResultado.textContent = formatBRL(calcularAGV(qtd));
   }
 
   if (agvQtd) {
     agvQtd.addEventListener("input", recalcularAGV);
   }
+
   if (agvMenos) {
     agvMenos.addEventListener("click", () => {
       const atual = Math.max(0, parseInt(agvQtd.value, 10) || 0);
+
       agvQtd.value = Math.max(0, atual - 1);
+
       recalcularAGV();
     });
   }
+
   if (agvMais) {
     agvMais.addEventListener("click", () => {
       const atual = Math.max(0, parseInt(agvQtd.value, 10) || 0);
+
       agvQtd.value = atual + 1;
+
       recalcularAGV();
     });
   }
 
   /* ============================ IGREEN ENERGY ============================ */
+
   const igreenConta = document.getElementById("igreenConta");
   const igreenConexoes = document.getElementById("igreenConexoes");
   const igreenPercentual = document.getElementById("igreenPercentual");
   const igreenResultado = document.getElementById("igreenResultado");
 
   function recalcularIgreen() {
-  if (!igreenConta || !igreenConexoes) return;
+    if (!igreenConta || !igreenConexoes) return;
 
-  let conta = parseFloat(igreenConta.value);
-  if (Number.isNaN(conta) || conta < 0) conta = 0;
+    let conta = parseFloat(igreenConta.value);
 
-  let conexoes = parseInt(igreenConexoes.value, 10);
-  if (Number.isNaN(conexoes) || conexoes < 0) conexoes = 0;
+    if (Number.isNaN(conta) || conta < 0) {
+      conta = 0;
+    }
 
-  const { faixa, potencial } = calcularIgreen(conta, conexoes);
+    let contasAtivas = parseInt(igreenConexoes.value, 10);
 
-  igreenPercentual.textContent = faixa
-    ? `${(faixa.pct * 100).toFixed(0)}%`
-    : "—";
-  igreenResultado.textContent = formatBRL(potencial);
-}
+    if (Number.isNaN(contasAtivas) || contasAtivas < 0) {
+      contasAtivas = 0;
+    }
 
-  if (igreenConta) igreenConta.addEventListener("input", recalcularIgreen);
-  if (igreenConexoes)
+    const { faixa, potencial } = calcularIgreen(conta, contasAtivas);
+
+    igreenPercentual.textContent = faixa
+      ? `${(faixa.pct * 100).toFixed(0)}%`
+      : "—";
+
+    igreenResultado.textContent = formatBRL(potencial);
+  }
+
+  if (igreenConta) {
+    igreenConta.addEventListener("input", recalcularIgreen);
+  }
+
+  if (igreenConexoes) {
     igreenConexoes.addEventListener("input", recalcularIgreen);
+  }
 
   /* ============================ SEGUROS / LOOVI ============================ */
+
   const looviQtd = document.getElementById("looviQtd");
   const looviQtdMenos = document.getElementById("looviQtdMenos");
   const looviQtdMais = document.getElementById("looviQtdMais");
@@ -315,49 +356,65 @@ export function init() {
     if (!looviQtd) return;
 
     let qtd = parseInt(looviQtd.value, 10);
-    if (Number.isNaN(qtd) || qtd < 0) qtd = 0;
+
+    if (Number.isNaN(qtd) || qtd < 0) {
+      qtd = 0;
+    }
+
     looviQtd.value = qtd;
 
     looviValorLabel.textContent = formatBRL(looviValorAtual);
+
     looviResultado.textContent = formatBRL(calcularLoovi(qtd, looviValorAtual));
   }
 
   if (looviQtd) {
     looviQtd.addEventListener("input", recalcularLoovi);
   }
+
   if (looviQtdMenos) {
     looviQtdMenos.addEventListener("click", () => {
       const atual = Math.max(0, parseInt(looviQtd.value, 10) || 0);
+
       looviQtd.value = Math.max(0, atual - 1);
+
       recalcularLoovi();
     });
   }
+
   if (looviQtdMais) {
     looviQtdMais.addEventListener("click", () => {
       const atual = Math.max(0, parseInt(looviQtd.value, 10) || 0);
+
       looviQtd.value = atual + 1;
+
       recalcularLoovi();
     });
   }
+
   if (looviValorMenos) {
     looviValorMenos.addEventListener("click", () => {
       looviValorAtual = Math.max(
         LOOVI_VALOR_MIN,
         looviValorAtual - LOOVI_VALOR_PASSO,
       );
+
       recalcularLoovi();
     });
   }
+
   if (looviValorMais) {
     looviValorMais.addEventListener("click", () => {
       looviValorAtual = Math.min(
         LOOVI_VALOR_MAX,
         looviValorAtual + LOOVI_VALOR_PASSO,
       );
+
       recalcularLoovi();
     });
   }
 
-  // ---------- Estado inicial ----------
+  /* ---------- Estado inicial ---------- */
+
   atualizarServicosDisponiveis();
 }
