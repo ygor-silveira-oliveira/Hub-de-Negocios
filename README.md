@@ -3,6 +3,10 @@
 Site em **HTML/CSS/JS puro (vanilla)**, sem framework e sem etapa de build.
 Os componentes são carregados dinamicamente em tempo de execução via `fetch()`.
 
+## Produção
+
+- https://vemcomhub.com.br (deploy via Netlify)
+
 ## Como rodar localmente
 
 Projeto 100% estático — sem Node.js, sem instalação de dependências.
@@ -25,17 +29,15 @@ python3 -m http.server 3000
 
 ## Estrutura
 
-```
 hub/
-├── index.html          # esqueleto da página + containers [data-component]
-├── css/global.css      # design tokens, reset, utilitários globais
-├── js/main.js           # orquestrador: carrega HTML e inicializa JS de cada componente
+├── index.html # esqueleto da página + containers [data-component]
+├── css/global.css # design tokens, reset, utilitários globais
+├── js/main.js # orquestrador: carrega HTML e inicializa JS de cada componente
 └── components/
-    └── <nome>/
-        ├── <nome>.html  # markup do componente
-        ├── <nome>.css   # estilos exclusivos do componente
-        └── <nome>.js    # opcional — deve exportar function init()
-```
+└── <nome>/
+├── <nome>.html # markup do componente
+├── <nome>.css # estilos exclusivos do componente
+└── <nome>.js # opcional — deve exportar function init()
 
 Não há bundler nem gerenciador de pacotes: cada asset novo precisa ser
 referenciado manualmente. Isso é intencional (mantém o projeto leve, sem
