@@ -61,95 +61,15 @@ const REGRAS_IGREEN = [
 const COMISSAO_AGV = 500;
 
 /* -------- Seguros / Loovi --------
-   A Loovi NÃO tem uma comissão fixa/percentual calculável hoje: a
-   categoria do associado (Bronze/Prata/Ouro) não é definida pela lógica
-   atual, e o modelo de Premium/Elite depende de uma "base de vendas"
-   que o material não detalha o suficiente para simular.
+   Cálculo simples: quantidade de seguros vendidos × valor cobrado por
+   seguro. O valor cobrado é ajustável em incrementos fixos de R$50,00,
+   de R$50,00 até R$300,00 (definido diretamente pelo cliente). */
+const LOOVI_VALOR_MIN = 50;
+const LOOVI_VALOR_MAX = 300;
+const LOOVI_VALOR_PASSO = 50;
 
-   Por isso a Loovi não entra no bloco de REGRAS_* acima: aqui a lógica
-   é só de PROGRESSÃO DE NÍVEL (vendas/contratos -> nível potencial),
-   mantida isolada em seu próprio objeto/funções conforme pedido. Nada
-   disto altera CLT, Saque-Aniversário, AGV ou iGreen. */
-const REGRAS_LOOVI = {
-  junior: { vendas: 10, contratos: 20, label: "Júnior" },
-  senior: { vendas: 100, contratos: 30, label: "Sênior" },
-  premium: { vendas: 500, contratos: 100, label: "Premium" },
-  // Elite tem um único critério (contratos) — não existe "OR" com vendas
-  // para este nível no material.
-  elite: { contratos: 1000, label: "Elite" },
-};
-
-// Ordem de exibição da progressão visual. Black e Select aparecem no
-// material da Loovi como níveis posteriores ao Elite, mas sem critérios
-// numéricos definidos — por isso ficam só como etapas futuras/bloqueadas,
-// nunca alcançáveis pelo cálculo.
-const NIVEIS_LOOVI_ORDEM = [
-  { key: "junior", label: "Júnior" },
-  { key: "senior", label: "Sênior" },
-  { key: "premium", label: "Premium" },
-  { key: "elite", label: "Elite" },
-  { key: "black", label: "Black" },
-  { key: "select", label: "Select" },
-];
-
-// Chaves de nível que realmente têm critério numérico (usada para achar
-// "o próximo nível" a partir do atual).
-const NIVEIS_LOOVI_COM_CRITERIO = ["junior", "senior", "premium", "elite"];
-
-/** Nível mais alto que os números informados alcançam (regra OR),
- *  ou null se nenhum critério de Júnior for atingido ainda. */
-function determinarNivelLoovi(vendas, contratos) {
-  if (contratos >= REGRAS_LOOVI.elite.contratos) return "elite";
-  if (
-    vendas >= REGRAS_LOOVI.premium.vendas ||
-    contratos >= REGRAS_LOOVI.premium.contratos
-  )
-    return "premium";
-  if (
-    vendas >= REGRAS_LOOVI.senior.vendas ||
-    contratos >= REGRAS_LOOVI.senior.contratos
-  )
-    return "senior";
-  if (
-    vendas >= REGRAS_LOOVI.junior.vendas ||
-    contratos >= REGRAS_LOOVI.junior.contratos
-  )
-    return "junior";
-  return null;
-}
-
-/** Distância (em vendas e/ou contratos) até o próximo nível com
- *  critério definido. Cada caminho (vendas OU contratos) é calculado
- *  separadamente, sem misturar os dois. */
-function calcularProgressoLoovi(vendas, contratos) {
-  const nivelAtual = determinarNivelLoovi(vendas, contratos);
-  const idxAtual = nivelAtual
-    ? NIVEIS_LOOVI_COM_CRITERIO.indexOf(nivelAtual)
-    : -1;
-  const proximoKey = NIVEIS_LOOVI_COM_CRITERIO[idxAtual + 1] || null;
-
-  if (!proximoKey) {
-    // Já no maior nível com critério definido no material (Elite),
-    // ou não há mais nível calculável.
-    return {
-      nivelAtual,
-      proximo: null,
-      faltamVendas: null,
-      faltamContratos: null,
-    };
-  }
-
-  const regraProximo = REGRAS_LOOVI[proximoKey];
-  const faltamVendas =
-    regraProximo.vendas != null
-      ? Math.max(0, regraProximo.vendas - vendas)
-      : null;
-  const faltamContratos =
-    regraProximo.contratos != null
-      ? Math.max(0, regraProximo.contratos - contratos)
-      : null;
-
-  return { nivelAtual, proximo: proximoKey, faltamVendas, faltamContratos };
+function calcularLoovi(quantidade, valorPorSeguro) {
+  return quantidade * valorPorSeguro;
 }
 
 /* ================================================================== */
@@ -357,130 +277,86 @@ export function init() {
   const igreenConta = document.getElementById("igreenConta");
   const igreenConexoes = document.getElementById("igreenConexoes");
   const igreenPercentual = document.getElementById("igreenPercentual");
-  const igreenPorConexao = document.getElementById("igreenPorConexao");
   const igreenResultado = document.getElementById("igreenResultado");
 
   function recalcularIgreen() {
-    if (!igreenConta || !igreenConexoes) return;
+  if (!igreenConta || !igreenConexoes) return;
 
-    let conta = parseFloat(igreenConta.value);
-    if (Number.isNaN(conta) || conta < 0) conta = 0;
+  let conta = parseFloat(igreenConta.value);
+  if (Number.isNaN(conta) || conta < 0) conta = 0;
 
-    let conexoes = parseInt(igreenConexoes.value, 10);
-    if (Number.isNaN(conexoes) || conexoes < 0) conexoes = 0;
+  let conexoes = parseInt(igreenConexoes.value, 10);
+  if (Number.isNaN(conexoes) || conexoes < 0) conexoes = 0;
 
-    const { faixa, porConexao, potencial } = calcularIgreen(conta, conexoes);
+  const { faixa, potencial } = calcularIgreen(conta, conexoes);
 
-    igreenPercentual.textContent = faixa
-      ? `${(faixa.pct * 100).toFixed(0)}%`
-      : "—";
-    igreenPorConexao.textContent = formatBRL(porConexao);
-    igreenResultado.textContent = formatBRL(potencial);
-  }
+  igreenPercentual.textContent = faixa
+    ? `${(faixa.pct * 100).toFixed(0)}%`
+    : "—";
+  igreenResultado.textContent = formatBRL(potencial);
+}
 
   if (igreenConta) igreenConta.addEventListener("input", recalcularIgreen);
   if (igreenConexoes)
     igreenConexoes.addEventListener("input", recalcularIgreen);
 
   /* ============================ SEGUROS / LOOVI ============================ */
-  const looviVendas = document.getElementById("looviVendas");
-  const looviContratos = document.getElementById("looviContratos");
-  const looviVendasLabel = document.getElementById("looviVendasLabel");
-  const looviContratosLabel = document.getElementById("looviContratosLabel");
-  const looviNivelAtual = document.getElementById("looviNivelAtual");
-  const looviNivelProximo = document.getElementById("looviNivelProximo");
-  const looviProgresso = document.getElementById("looviProgresso");
-  const looviProgressao = document.getElementById("looviProgressao");
+  const looviQtd = document.getElementById("looviQtd");
+  const looviQtdMenos = document.getElementById("looviQtdMenos");
+  const looviQtdMais = document.getElementById("looviQtdMais");
+  const looviValorLabel = document.getElementById("looviValorLabel");
+  const looviValorMenos = document.getElementById("looviValorMenos");
+  const looviValorMais = document.getElementById("looviValorMais");
+  const looviResultado = document.getElementById("looviResultado");
 
-  function construirProgressaoLoovi() {
-    if (!looviProgressao) return;
-    looviProgressao.innerHTML = NIVEIS_LOOVI_ORDEM.map(
-      (nivel) => `
-        <div class="simulator__loovi-step" data-nivel="${nivel.key}">
-          <span class="simulator__loovi-step-dot"></span>
-          <span class="simulator__loovi-step-label">${nivel.label}</span>
-        </div>
-      `,
-    ).join("");
-  }
-
-  function atualizarProgressaoLoovi(nivelAtual) {
-    if (!looviProgressao) return;
-    const idxAtual = nivelAtual
-      ? NIVEIS_LOOVI_ORDEM.findIndex((nivel) => nivel.key === nivelAtual)
-      : -1;
-
-    looviProgressao
-      .querySelectorAll(".simulator__loovi-step")
-      .forEach((el, idx) => {
-        el.classList.toggle("is-done", idx < idxAtual);
-        el.classList.toggle("is-current", idx === idxAtual);
-        el.classList.toggle("is-locked", idx > idxAtual);
-      });
-  }
-
-  function pluralizar(qtd, singular, plural) {
-    return `${qtd} ${qtd === 1 ? singular : plural}`;
-  }
-
-  function atualizarResultadoLoovi({
-    nivelAtual,
-    proximo,
-    faltamVendas,
-    faltamContratos,
-  }) {
-    looviNivelAtual.textContent = nivelAtual
-      ? `Executivo ${REGRAS_LOOVI[nivelAtual].label}`
-      : "Nenhum nível alcançado ainda";
-
-    if (!proximo) {
-      looviNivelProximo.textContent = "—";
-      looviProgresso.textContent =
-        nivelAtual === "elite"
-          ? "Você atingiu o maior nível máximo do simulador! Entre em contato para saber sobre os próximos níveis."
-          : "";
-      return;
-    }
-
-    looviNivelProximo.textContent = `Executivo ${REGRAS_LOOVI[proximo].label}`;
-
-    const caminhos = [];
-    if (faltamVendas !== null && faltamVendas > 0) {
-      caminhos.push(pluralizar(faltamVendas, "venda", "vendas"));
-    }
-    if (faltamContratos !== null && faltamContratos > 0) {
-      caminhos.push(
-        pluralizar(faltamContratos, "contrato ativo", "contratos ativos"),
-      );
-    }
-
-    looviProgresso.textContent =
-      caminhos.length > 0
-        ? `Faltam ${caminhos.join(" ou ")} para o próximo nível.`
-        : "Nível já alcançado — avançando para o próximo assim que os números atualizarem.";
-  }
+  let looviValorAtual = LOOVI_VALOR_MIN;
 
   function recalcularLoovi() {
-    if (!looviVendas || !looviContratos) return;
+    if (!looviQtd) return;
 
-    const vendas = Number(looviVendas.value);
-    const contratos = Number(looviContratos.value);
+    let qtd = parseInt(looviQtd.value, 10);
+    if (Number.isNaN(qtd) || qtd < 0) qtd = 0;
+    looviQtd.value = qtd;
 
-    looviVendasLabel.textContent = pluralizar(vendas, "venda", "vendas");
-    looviContratosLabel.textContent = pluralizar(
-      contratos,
-      "contrato",
-      "contratos",
-    );
-
-    const resultado = calcularProgressoLoovi(vendas, contratos);
-    atualizarResultadoLoovi(resultado);
-    atualizarProgressaoLoovi(resultado.nivelAtual);
+    looviValorLabel.textContent = formatBRL(looviValorAtual);
+    looviResultado.textContent = formatBRL(calcularLoovi(qtd, looviValorAtual));
   }
 
-  if (looviProgressao) construirProgressaoLoovi();
-  if (looviVendas) looviVendas.addEventListener("input", recalcularLoovi);
-  if (looviContratos) looviContratos.addEventListener("input", recalcularLoovi);
+  if (looviQtd) {
+    looviQtd.addEventListener("input", recalcularLoovi);
+  }
+  if (looviQtdMenos) {
+    looviQtdMenos.addEventListener("click", () => {
+      const atual = Math.max(0, parseInt(looviQtd.value, 10) || 0);
+      looviQtd.value = Math.max(0, atual - 1);
+      recalcularLoovi();
+    });
+  }
+  if (looviQtdMais) {
+    looviQtdMais.addEventListener("click", () => {
+      const atual = Math.max(0, parseInt(looviQtd.value, 10) || 0);
+      looviQtd.value = atual + 1;
+      recalcularLoovi();
+    });
+  }
+  if (looviValorMenos) {
+    looviValorMenos.addEventListener("click", () => {
+      looviValorAtual = Math.max(
+        LOOVI_VALOR_MIN,
+        looviValorAtual - LOOVI_VALOR_PASSO,
+      );
+      recalcularLoovi();
+    });
+  }
+  if (looviValorMais) {
+    looviValorMais.addEventListener("click", () => {
+      looviValorAtual = Math.min(
+        LOOVI_VALOR_MAX,
+        looviValorAtual + LOOVI_VALOR_PASSO,
+      );
+      recalcularLoovi();
+    });
+  }
 
   // ---------- Estado inicial ----------
   atualizarServicosDisponiveis();

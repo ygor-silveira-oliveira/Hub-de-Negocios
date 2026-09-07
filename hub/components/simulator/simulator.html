@@ -7,8 +7,8 @@
           <span class="section-tag">Simulador</span>
           <h2 class="section-title">Visualize seu potencial</h2>
           <p class="section-subtitle">
-            Escolha seu plano, selecione uma oportunidade e veja a
-            estimativa de comissão atualizar em tempo real.
+            Escolha seu plano, selecione uma oportunidade e veja a estimativa de
+            comissão atualizar em tempo real.
           </p>
         </div>
 
@@ -106,6 +106,11 @@
         <!-- CRÉDITO CLT -->
         <div class="simulator__panel" data-panel="clt" hidden>
           <div class="simulator__panel-glow" aria-hidden="true"></div>
+          <img
+            src="assets/images/logos/logo-credito-bmp.jpg"
+            alt="BMP"
+            class="simulator__panel-logo"
+          />
 
           <div class="simulator__field">
             <div class="simulator__field-head">
@@ -141,25 +146,20 @@
               <button class="simulator__term-btn" data-prazo="18">18x</button>
               <button class="simulator__term-btn" data-prazo="24">24x</button>
               <button class="simulator__term-btn" data-prazo="30">30x</button>
-              <button
-                class="simulator__term-btn is-active"
-                data-prazo="36"
-              >
+              <button class="simulator__term-btn is-active" data-prazo="36">
                 36x
               </button>
             </div>
           </div>
 
           <div class="simulator__result">
-            <span class="simulator__result-label"
-              >Potencial de comissão</span
-            >
+            <span class="simulator__result-label">Potencial de comissão</span>
             <span class="simulator__result-value" id="cltResultado"
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas
-              pelo HUB.</span
+              >Estimativa baseada nas regras de comissionamento informadas pelo
+              HUB.</span
             >
           </div>
         </div>
@@ -167,6 +167,11 @@
         <!-- SAQUE-ANIVERSÁRIO -->
         <div class="simulator__panel" data-panel="saque" hidden>
           <div class="simulator__panel-glow" aria-hidden="true"></div>
+          <img
+            src="assets/images/logos/logo-credito-bmp.jpg"
+            alt="BMP"
+            class="simulator__panel-logo"
+          />
 
           <div class="simulator__field">
             <div class="simulator__field-head">
@@ -202,103 +207,109 @@
           </div>
 
           <div class="simulator__result">
-            <span class="simulator__result-label"
-              >Potencial de comissão</span
-            >
+            <span class="simulator__result-label">Potencial de comissão</span>
             <span class="simulator__result-value" id="saqueResultado"
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas
-              pelo HUB.</span
+              >Estimativa baseada nas regras de comissionamento informadas pelo
+              HUB.</span
             >
           </div>
         </div>
 
         <!-- SEGUROS / LOOVI -->
-        <div class="simulator__panel simulator__panel--loovi" data-panel="loovi" hidden>
+        <div
+          class="simulator__panel simulator__panel--loovi"
+          data-panel="loovi"
+          hidden
+        >
           <div class="simulator__panel-glow" aria-hidden="true"></div>
+          <img
+            src="assets/images/logos/logo-loovi.jpeg"
+            alt="Loovi"
+            class="simulator__panel-logo simulator__panel-logo--center"
+          />
 
-          <span class="simulator__loovi-tag">LOOVI SEGUROS</span>
           <p class="simulator__loovi-text">
-            Simule sua evolução de nível na estrutura da Loovi a partir do
-            seu volume de vendas e contratos ativos.
+            Simule o total a partir da quantidade de seguros vendidos e do valor
+            cobrado em cada um.
           </p>
 
-          <div class="simulator__field">
-            <div class="simulator__field-head">
-              <label for="looviVendas">Vendas por mês</label>
-              <span class="simulator__field-value" id="looviVendasLabel"
-                >0 vendas</span
-              >
+          <div class="loovi__field">
+            <div class="simulator__field">
+              <span class="simulator__field-label">Quantidade de seguros</span>
+              <br />
+              <div class="simulator__stepper">
+                <button
+                  type="button"
+                  class="simulator__stepper-btn"
+                  id="looviQtdMenos"
+                  aria-label="Diminuir quantidade"
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  id="looviQtd"
+                  class="simulator__stepper-input"
+                  min="0"
+                  step="1"
+                  value="1"
+                  inputmode="numeric"
+                />
+                <button
+                  type="button"
+                  class="simulator__stepper-btn"
+                  id="looviQtdMais"
+                  aria-label="Aumentar quantidade"
+                >
+                  +
+                </button>
+              </div>
             </div>
-            <input
-              type="range"
-              id="looviVendas"
-              class="simulator__range"
-              min="0"
-              max="1000"
-              step="1"
-              value="0"
-            />
-            <div class="simulator__slider-scale">
-              <span>0</span>
-              <span>1.000</span>
+            <div class="simulator__field">
+              <span class="simulator__field-label"
+                >Valor cobrado por seguro</span
+              ><br />
+              <div class="simulator__stepper">
+                <button
+                  type="button"
+                  class="simulator__stepper-btn"
+                  id="looviValorMenos"
+                  aria-label="Diminuir valor cobrado"
+                >
+                  −
+                </button>
+                <span class="simulator__stepper-value" id="looviValorLabel"
+                  >R$ 50</span
+                >
+                <button
+                  type="button"
+                  class="simulator__stepper-btn"
+                  id="looviValorMais"
+                  aria-label="Aumentar valor cobrado"
+                >
+                  +
+                </button>
+              </div>
+              <div class="simulator__slider-scale">
+                <span>R$ 50</span>
+                <span>-------------</span>
+                <span>R$ 300</span>
+              </div>
             </div>
           </div>
 
-          <div class="simulator__field">
-            <div class="simulator__field-head">
-              <label for="looviContratos">Contratos ativos</label>
-              <span class="simulator__field-value" id="looviContratosLabel"
-                >0 contratos</span
-              >
-            </div>
-            <input
-              type="range"
-              id="looviContratos"
-              class="simulator__range"
-              min="0"
-              max="1000"
-              step="1"
-              value="0"
-            />
-            <div class="simulator__slider-scale">
-              <span>0</span>
-              <span>1.000</span>
-            </div>
+          <div class="simulator__result">
+            <span class="simulator__result-label">Total estimado</span>
+            <span class="simulator__result-value" id="looviResultado"
+              >R$ 50,00</span
+            >
+            <span class="simulator__result-caption"
+              >Cálculo: quantidade de seguros × valor cobrado por seguro.</span
+            >
           </div>
-
-          <div class="simulator__loovi-result">
-            <div class="simulator__loovi-result-block">
-              <span class="simulator__result-label">Nível potencial</span>
-              <span class="simulator__loovi-nivel-atual" id="looviNivelAtual"
-                >—</span
-              >
-            </div>
-            <div class="simulator__loovi-result-block">
-              <span class="simulator__result-label">Próximo nível</span>
-              <span
-                class="simulator__loovi-nivel-proximo"
-                id="looviNivelProximo"
-                >—</span
-              >
-              <span class="simulator__loovi-progresso" id="looviProgresso"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="simulator__loovi-progressao"
-            id="looviProgressao"
-            aria-hidden="true"
-          ></div>
-
-          <span class="simulator__loovi-levels-caption">
-            Simulação de evolução baseada no modelo de níveis da Loovi.
-            Categoria de comissionamento (Bronze / Prata / Ouro) e as regras
-            de Premium e Elite são detalhadas no contato com o HUB.
-          </span>
 
           <a href="#contato" class="btn btn-primary simulator__cta"
             >Quero saber mais</a
@@ -308,6 +319,11 @@
         <!-- SEGURO DE CARROS — UNIVERSO AGV -->
         <div class="simulator__panel" data-panel="agv" hidden>
           <div class="simulator__panel-glow" aria-hidden="true"></div>
+          <img
+            src="assets/images/logos/logo-agv.jpg"
+            alt="Universo AGV"
+            class="simulator__panel-logo"
+          />
 
           <div class="simulator__field">
             <span class="simulator__field-label">Quantidade de seguros</span>
@@ -343,22 +359,20 @@
           <div class="simulator__mini-metrics">
             <div class="simulator__mini-metric">
               <span class="simulator__mini-metric-label"
-                >Comissão por seguro</span
+                >Comissão por seguro até:</span
               >
               <span class="simulator__mini-metric-value">R$ 500,00</span>
             </div>
           </div>
 
           <div class="simulator__result">
-            <span class="simulator__result-label"
-              >Potencial de comissão</span
-            >
+            <span class="simulator__result-label">Potencial de comissão</span>
             <span class="simulator__result-value" id="agvResultado"
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas
-              pelo HUB.</span
+              >Estimativa baseada nas regras de comissionamento informadas pelo
+              HUB.</span
             >
           </div>
         </div>
@@ -366,6 +380,11 @@
         <!-- IGREEN ENERGY -->
         <div class="simulator__panel" data-panel="igreen" hidden>
           <div class="simulator__panel-glow" aria-hidden="true"></div>
+          <img
+            src="assets/images/logos/logo-igreen.jpg"
+            alt="iGreen Energy"
+            class="simulator__panel-logo"
+          />
 
           <div class="simulator__row">
             <div class="simulator__field simulator__field--inline">
@@ -406,14 +425,6 @@
                 >—</span
               >
             </div>
-            <div class="simulator__mini-metric">
-              <span class="simulator__mini-metric-label"
-                >Comissão estimada por conexão</span
-              >
-              <span class="simulator__mini-metric-value" id="igreenPorConexao"
-                >R$ 0,00</span
-              >
-            </div>
           </div>
 
           <div class="simulator__result">
@@ -424,9 +435,9 @@
               >R$ 0,00</span
             >
             <span class="simulator__result-caption"
-              >Estimativa baseada nas regras de comissionamento informadas
-              pelo HUB. O percentual promocional substitui a recorrência
-              padrão de 3%.</span
+              >Estimativa baseada nas regras de comissionamento informadas pelo
+              HUB. O percentual promocional substitui a recorrência padrão de
+              3%.</span
             >
           </div>
         </div>
