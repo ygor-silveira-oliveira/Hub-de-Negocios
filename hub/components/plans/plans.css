@@ -137,8 +137,14 @@
     max-width: 680px;
     margin-inline: auto;
   }
-  .plans__card--featured {
-    order: -1;
+  .plans__card:nth-child(1) {
+    order: 3; /* Start - por último */
+  }
+  .plans__card:nth-child(2) {
+    order: 2; /* Pro - no meio */
+  }
+  .plans__card:nth-child(3) {
+    order: 1; /* Prime - primeiro */
   }
 }
 
@@ -148,8 +154,14 @@
     max-width: 460px;
     margin-inline: auto;
   }
-  .plans__card--featured {
-    order: -1;
+  .plans__card:nth-child(1) {
+    order: 3; /* Start - por último */
+  }
+  .plans__card:nth-child(2) {
+    order: 2; /* Pro - no meio */
+  }
+  .plans__card:nth-child(3) {
+    order: 1; /* Prime - primeiro */
   }
 }
 

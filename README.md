@@ -29,15 +29,17 @@ python3 -m http.server 3000
 
 ## Estrutura
 
+```
 hub/
-├── index.html # esqueleto da página + containers [data-component]
-├── css/global.css # design tokens, reset, utilitários globais
-├── js/main.js # orquestrador: carrega HTML e inicializa JS de cada componente
+├── index.html          # esqueleto da página + containers [data-component]
+├── css/global.css      # design tokens, reset, utilitários globais
+├── js/main.js           # orquestrador: carrega HTML e inicializa JS de cada componente
 └── components/
-└── <nome>/
-├── <nome>.html # markup do componente
-├── <nome>.css # estilos exclusivos do componente
-└── <nome>.js # opcional — deve exportar function init()
+    └── <nome>/
+        ├── <nome>.html  # markup do componente
+        ├── <nome>.css   # estilos exclusivos do componente
+        └── <nome>.js    # opcional — deve exportar function init()
+```
 
 Não há bundler nem gerenciador de pacotes: cada asset novo precisa ser
 referenciado manualmente. Isso é intencional (mantém o projeto leve, sem
